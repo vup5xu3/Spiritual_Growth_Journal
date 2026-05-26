@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chih-Hsin の 屬靈成長筆記本</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700;900&family=Noto+Sans+TC:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1612;--ink-soft:#2d2820;--ink-mute:#5a5248;
+  --parchment:#faf7f0;--parchment-mid:#f2ede3;--parchment-dark:#e8e0d0;
+  --gold:#c9a84c;--gold-light:#e8d5a3;--gold-pale:#fdf6e3;--gold-deep:#a07830;
+  --rust:#8b3a2a;--rust-light:#b85a46;
+  --sage:#3d6b55;--sage-light:#6a9e82;
+  --sky:#3a5a7a;--sky-light:#6a8aaa;
+  --violet:#5a3a6a;--violet-light:#8a6a9a;
+  --border:#ddd5c5;--border-soft:#ece6da;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--parchment);
+  color:var(--ink);
+  font-family:'Noto Serif TC',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── BACKGROUND TEXTURE ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(201,168,76,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(139,58,42,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, rgba(61,107,85,.04) 0%, transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+header{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:72px 24px 56px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(26,22,18,.96) 0%, rgba(40,32,24,.92) 100%);
+  overflow:hidden;
+}
+header::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,.04) 39px, rgba(201,168,76,.04) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,.04) 39px, rgba(201,168,76,.04) 40px);
+  pointer-events:none;
+}
+.header-inner{position:relative;z-index:1;}
+.owner-label{
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--gold);
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+  opacity:.8;
+}
+.main-title{
+  font-family:'Noto Serif TC',serif;
+  font-size:clamp(28px, 6vw, 52px);
+  font-weight:300;
+  color:#faf7f0;
+  letter-spacing:.15em;
+  line-height:1.4;
+  margin-bottom:6px;
+}
+.main-title strong{
+  font-weight:900;
+  color:var(--gold-light);
+  display:block;
+  font-size:clamp(32px,7vw,60px);
+  letter-spacing:.08em;
+}
+.subtitle{
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:clamp(14px,2vw,18px);
+  color:var(--gold-light);
+  opacity:.6;
+  margin-top:16px;
+  letter-spacing:.05em;
+}
+.header-ornament{
+  display:flex;align-items:center;gap:20px;
+  justify-content:center;
+  margin:28px 0 0;
+}
+.header-ornament::before,.header-ornament::after{
+  content:'';flex:1;max-width:120px;height:1px;
+  background:linear-gradient(to right, transparent, var(--gold));
+}
+.header-ornament::after{background:linear-gradient(to left, transparent, var(--gold));}
+.header-ornament span{color:var(--gold);font-size:18px;}
+
+/* ── SECTION TITLES ── */
+.section-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px;}
+.section-head{
+  display:flex;align-items:center;gap:16px;
+  margin:56px 0 28px;
+}
+.section-head::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-title{
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--gold-deep);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.section-icon{font-size:16px;}
+
+/* ── NOTEBOOK CARDS ── */
+.notebooks-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+  gap:20px;
+  margin-bottom:16px;
+}
+.notebook-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+  display:flex;flex-direction:column;
+  transition:all .3s ease;
+  position:relative;
+}
+.notebook-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 48px rgba(26,22,18,.12);
+  border-color:var(--gold-light);
+}
+.card-stripe{height:4px;width:100%;}
+.card-stripe.gold{background:linear-gradient(90deg,var(--gold-deep),var(--gold-light));}
+.card-stripe.rust{background:linear-gradient(90deg,var(--rust),var(--rust-light));}
+.card-stripe.sage{background:linear-gradient(90deg,var(--sage),var(--sage-light));}
+.card-stripe.sky{background:linear-gradient(90deg,var(--sky),var(--sky-light));}
+.card-stripe.violet{background:linear-gradient(90deg,var(--violet),var(--violet-light));}
+.card-body{padding:24px 24px 20px;flex:1;display:flex;flex-direction:column;gap:10px;}
+.card-emoji{font-size:28px;line-height:1;}
+.card-name{
+  font-size:17px;font-weight:700;
+  color:var(--ink);letter-spacing:.02em;
+  line-height:1.3;
+}
+.card-desc{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:12px;color:var(--ink-mute);
+  line-height:1.8;flex:1;
+}
+.card-footer{
+  padding:12px 24px;
+  background:var(--parchment-mid);
+  border-top:1px solid var(--border-soft);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11px;
+  color:var(--gold-deep);
+  display:flex;align-items:center;gap:6px;
+  letter-spacing:.03em;
+}
+.card-footer svg{opacity:.6;}
+
+/* ── COMING SOON CARD ── */
+.notebook-card.coming{
+  opacity:.6;
+  cursor:default;
+  pointer-events:none;
+}
+.coming .card-footer{color:var(--ink-mute);}
+
+/* ── RECORDS TABLE ── */
+.records-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:16px;
+}
+.record-card{
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  text-decoration:none;color:inherit;
+  display:flex;
+  transition:all .25s;
+  background:white;
+}
+.record-card:hover{border-color:var(--gold-light);box-shadow:0 8px 24px rgba(26,22,18,.08);transform:translateY(-2px);}
+.record-side{
+  width:6px;flex-shrink:0;
+}
+.record-side.green{background:linear-gradient(180deg,#4CAF50,#2e7d52);}
+.record-side.blue{background:linear-gradient(180deg,#2196F3,#1565C0);}
+.record-content{padding:16px 18px;flex:1;}
+.record-label{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:10px;color:var(--ink-mute);
+  letter-spacing:.08em;margin-bottom:5px;
+}
+.record-name{
+  font-size:14px;font-weight:700;
+  color:var(--ink);line-height:1.4;
+}
+.record-url{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11px;color:var(--sage);
+  margin-top:6px;
+}
+
+/* ── QUOTIENT TABLE ── */
+.quotient-table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  font-size:13px;
+}
+.quotient-table thead tr{
+  background:var(--ink);color:var(--gold-light);
+}
+.quotient-table thead th{
+  padding:14px 16px;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:500;
+  letter-spacing:.05em;
+  text-align:left;
+}
+.quotient-table thead th:first-child{width:44px;text-align:center;}
+.quotient-table tbody tr{
+  border-bottom:1px solid var(--border-soft);
+  transition:background .15s;
+}
+.quotient-table tbody tr:last-child{border-bottom:none;}
+.quotient-table tbody tr:hover{background:var(--gold-pale);}
+.quotient-table tbody td{
+  padding:11px 16px;
+  line-height:1.7;
+  color:var(--ink-soft);
+}
+.quotient-table tbody td:first-child{
+  text-align:center;
+  font-family:'IM Fell English',serif;
+  font-size:15px;
+  color:var(--gold-deep);
+  font-weight:700;
+}
+.quotient-table tbody td:nth-child(2){
+  font-weight:700;
+  color:var(--ink);
+  white-space:nowrap;
+  min-width:90px;
+}
+.quotient-table tbody td:nth-child(3){
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:12px;
+  color:var(--ink-mute);
+}
+
+/* ── SCORING TABLE ── */
+.score-wrap{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.score-table{width:100%;border-collapse:collapse;font-size:13px;}
+.score-table .cat-row{
+  background:var(--ink);color:var(--gold-light);
+}
+.score-table .cat-row td{
+  padding:12px 16px;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  letter-spacing:.03em;
+}
+.score-table .cat-row .score-pts{
+  text-align:right;
+  color:var(--gold);
+  font-size:15px;
+}
+.score-table .item-row td{
+  padding:10px 16px;
+  border-bottom:1px solid var(--border-soft);
+  line-height:1.7;
+  vertical-align:top;
+}
+.score-table .item-row:last-of-type td{border-bottom:1px solid var(--border);}
+.score-table .item-row:hover{background:var(--gold-pale);}
+.item-num{
+  width:36px;text-align:center;
+  font-family:'IM Fell English',serif;
+  color:var(--gold-deep);font-size:14px;font-weight:700;
+  vertical-align:top;
+}
+.item-name{
+  font-weight:700;color:var(--ink);
+  white-space:nowrap;min-width:90px;
+  padding-right:8px;
+}
+.item-pts{
+  text-align:right;width:36px;
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:12px;color:var(--rust);font-weight:700;
+  white-space:nowrap;
+}
+.score-table .total-row td{
+  padding:14px 16px;
+  background:var(--gold-pale);
+  border-top:2px solid var(--gold);
+}
+.total-label{font-weight:900;font-size:15px;color:var(--ink);}
+.total-pts{text-align:right;font-size:18px;font-weight:900;color:var(--rust);}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:48px 24px 40px;
+  margin-top:64px;
+  border-top:1px solid var(--border);
+  background:linear-gradient(0deg, rgba(26,22,18,.03) 0%, transparent 100%);
+}
+.footer-cross{font-size:24px;color:var(--gold);margin-bottom:12px;}
+.footer-verse{
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:15px;
+  color:var(--ink-mute);
+  max-width:480px;
+  margin:0 auto 8px;
+  line-height:1.8;
+}
+.footer-ref{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11px;color:var(--gold-deep);
+  letter-spacing:.08em;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  header{padding:48px 16px 40px;}
+  .section-wrap{padding:0 16px;}
+  .notebooks-grid{grid-template-columns:1fr;}
+  .records-grid{grid-template-columns:1fr;}
+  .quotient-table thead th:nth-child(3),
+  .quotient-table tbody td:nth-child(3){display:none;}
+  .section-head{margin:40px 0 20px;}
+}
+
+/* ── ENTRANCE ANIMATION ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.notebook-card,.record-card,.quotient-table,.score-wrap{
+  animation:fadeUp .5s ease both;
+}
+.notebook-card:nth-child(1){animation-delay:.05s;}
+.notebook-card:nth-child(2){animation-delay:.1s;}
+.notebook-card:nth-child(3){animation-delay:.15s;}
+.notebook-card:nth-child(4){animation-delay:.2s;}
+.notebook-card:nth-child(5){animation-delay:.25s;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <p class="owner-label">Chih-Hsin の</p>
+    <h1 class="main-title">
+      屬靈成長
+      <strong>筆記本</strong>
+    </h1>
+    <p class="subtitle">Spiritual Growth Journal &amp; Resource Hub</p>
+    <div class="header-ornament"><span>✦</span></div>
+  </div>
+</header>
+
+<div class="section-wrap">
+
+  <!-- ── 筆記本 ── -->
+  <div class="section-head">
+    <span class="section-icon">📚</span>
+    <span class="section-title">Three Notebooks · 三大屬靈筆記本</span>
+  </div>
+
+  <div class="notebooks-grid">
+
+    <a class="notebook-card" href="https://sunday-note.vercel.app/" target="_blank">
+      <div class="card-stripe gold"></div>
+      <div class="card-body">
+        <div class="card-emoji">✝️</div>
+        <div class="card-name">主日靈糧</div>
+        <div class="card-desc">每主日講道要點、靈修筆記與屬靈糧食，讓神的話語在心中扎根生長。</div>
+      </div>
+      <div class="card-footer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        sunday-note.vercel.app
+      </div>
+    </a>
+
+    <a class="notebook-card" href="https://bible-exhibition.vercel.app/" target="_blank">
+      <div class="card-stripe rust"></div>
+      <div class="card-body">
+        <div class="card-emoji">🏛️</div>
+        <div class="card-name">聖經人物</div>
+        <div class="card-desc">聖經中每一位人物的生命故事、信仰歷程與屬靈功課，從先人的腳蹤學習。</div>
+      </div>
+      <div class="card-footer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        bible-exhibition.vercel.app
+      </div>
+    </a>
+
+    <a class="notebook-card" href="https://catechism-for-new.vercel.app/" target="_blank">
+      <div class="card-stripe sage"></div>
+      <div class="card-body">
+        <div class="card-emoji">🌱</div>
+        <div class="card-name">初信造就</div>
+        <div class="card-desc">為初信者預備的造就課程，奠定信仰根基，在主裡穩健成長，走向成熟。</div>
+      </div>
+      <div class="card-footer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        catechism-for-new.vercel.app
+      </div>
+    </a>
+
+    <a class="notebook-card coming" href="#" target="_blank">
+      <div class="card-stripe sky"></div>
+      <div class="card-body">
+        <div class="card-emoji">💡</div>
+        <div class="card-name">啟示信息</div>
+        <div class="card-desc">神所賜的啟示與默示信息，記錄從聖靈而來的亮光與感動。</div>
+      </div>
+      <div class="card-footer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        即將推出 · Coming Soon
+      </div>
+    </a>
+
+    <a class="notebook-card coming" href="#" target="_blank">
+      <div class="card-stripe violet"></div>
+      <div class="card-body">
+        <div class="card-emoji">📖</div>
+        <div class="card-name">聖經研讀</div>
+        <div class="card-desc">系統性聖經研讀筆記，深入探索各卷書的神學主題與應用。</div>
+      </div>
+      <div class="card-footer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        即將推出 · Coming Soon
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── 記錄表格 ── -->
+  <div class="section-head">
+    <span class="section-icon">📊</span>
+    <span class="section-title">Records · 紀錄表格</span>
+  </div>
+
+  <div class="records-grid">
+
+    <a class="record-card" href="https://docs.google.com/spreadsheets/d/1qYkmg91tseF99O2M-J2q8e_o4bjm0mHHmLA3ySlkNAc/edit?gid=252095239#gid=252095239" target="_blank">
+      <div class="record-side green"></div>
+      <div class="record-content">
+        <div class="record-label">DAILY GROWTH · 每日</div>
+        <div class="record-name">[ 李之馨 ] 屬靈成長紀錄表</div>
+        <div class="record-url">Google Sheets ↗</div>
+      </div>
+    </a>
+
+    <a class="record-card" href="https://docs.google.com/spreadsheets/d/11ry2ODU2sZhMdq05LaYur7bg1CRmHTXJlygWWDZLhwc/edit?gid=638548166#gid=638548166" target="_blank">
+      <div class="record-side blue"></div>
+      <div class="record-content">
+        <div class="record-label">ANNUAL PLAN · 年度</div>
+        <div class="record-name">台北基甸一軍：靈程進步計畫</div>
+        <div class="record-url">Google Sheets ↗</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── 二十個美好商數 ── -->
+  <div class="section-head">
+    <span class="section-icon">✨</span>
+    <span class="section-title">Twenty Quotients · 二十種美好商數</span>
+  </div>
+
+  <table class="quotient-table">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>商數</th>
+        <th>描述</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>逆境商數</td><td>指一個人的挫折忍受力或是面對逆境而加以處理的能力</td></tr>
+      <tr><td>2</td><td>美麗商數</td><td>對於週遭的事物均能以開朗接納的心胸去欣賞事物的結構；很會看別人的優點，看別人比自己強</td></tr>
+      <tr><td>3</td><td>創意商數</td><td>生活中的各種事務處理、問題的解決，能有新的方式，且處理的效果比其他舊有的方式為佳</td></tr>
+      <tr><td>4</td><td>發展商數</td><td>促使物態或事態轉變的能力，這種能力也是人類社會進步的泉源</td></tr>
+      <tr><td>5</td><td>情緒商數</td><td>面對多元的變化衝擊，情緒的穩定程度</td></tr>
+      <tr><td>6</td><td>信心商數</td><td>對自己是否有自信心；在屬靈上你對主是否有信心</td></tr>
+      <tr><td>7</td><td>語法商數</td><td>運用適當的語文詞句，從事溝通表達而不致於被曲解或模糊的能力</td></tr>
+      <tr><td>8</td><td>健康商數</td><td>身心靈的健康蒙　神保守的程度；唯有行真理，遵行　神的旨意才不會把　神所賜的福分漏光</td></tr>
+      <tr><td>9</td><td>智力商數</td><td>理解聖經真理，理解牧師書籍、主日靈糧</td></tr>
+      <tr><td>10</td><td>判斷商數</td><td>充實自己，培養有足夠的悟性判斷力；聖工上願意完全順服　神，凡事藉著團隊禱告求問　神</td></tr>
+      <tr><td>11</td><td>知識商數</td><td>在動態變化的環境中，能夠及時充實所需、解決問題之知識的能力；求知的心態、行為</td></tr>
+      <tr><td>12</td><td>領導商數</td><td>要有基督馨香之氣，要說合宜造就人的話，要有擔當、有肩膀、有責任心，願服事全群</td></tr>
+      <tr><td>13</td><td>管理商數</td><td>要先把自己管理好，不要一直盯著別人的缺點看；不要只發現問題，卻不會解決問題</td></tr>
+      <tr><td>14</td><td>自然商數</td><td>欣賞大自然，了解大自然，進而維護大自然，適度應用大自然</td></tr>
+      <tr><td>15</td><td>次序商數</td><td>神→家庭→教會的排序</td></tr>
+      <tr><td>16</td><td>耐心商數</td><td>高耐心商數的人，心態穩定，安心以對萬事萬物，易產生信心、恆心、熱心與愛心</td></tr>
+      <tr><td>17</td><td>樸素商數</td><td>知足常樂，不要過奢華的生活</td></tr>
+      <tr><td>18</td><td>關係商數</td><td>如何有效運用各種網絡，增進人際活動的效率與效果；是否能把人際關係處理好</td></tr>
+      <tr><td>19</td><td>服務商數</td><td>建立自己服務他人的技能，進而精準地接受合適服務的能力</td></tr>
+      <tr><td>20</td><td>機智商數</td><td>也就是臨場的反應與處理能力</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── 靈程評分 ── -->
+  <div class="section-head">
+    <span class="section-icon">📜</span>
+    <span class="section-title">Spiritual Scoring · 靈程評分項目</span>
+  </div>
+
+  <div class="score-wrap">
+    <table class="score-table">
+      <tbody>
+
+        <tr class="cat-row">
+          <td colspan="3">一、生命的深度與廣度</td>
+          <td class="score-pts">20 分</td>
+        </tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">信主的年日</td><td>信主時間長短與生命成熟度</td><td class="item-pts">4</td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">明白聖經程度 ★</td><td>對聖經真理的理解與掌握</td><td class="item-pts">4</td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">言行的總和</td><td>言語與行為的整體一致性</td><td class="item-pts">4</td></tr>
+        <tr class="item-row"><td class="item-num">4</td><td class="item-name">捨己順服的功課</td><td>在生活中學習捨己、順服神與人</td><td class="item-pts">4</td></tr>
+        <tr class="item-row"><td class="item-num">5</td><td class="item-name">為主受苦</td><td>為信仰願意付代價、忍受苦難</td><td class="item-pts">4</td></tr>
+
+        <tr class="cat-row">
+          <td colspan="3">二、服事的深度與廣度、時日、工場 ★</td>
+          <td class="score-pts">20 分</td>
+        </tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">服事時間年限工場</td><td>服事的年限與工場大小</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">服事的果效</td><td>服事所結的果子與影響力</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">教會成長比例</td><td>所服事之教會成長的比例</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">4</td><td class="item-name">講台的供應</td><td>以能按時分糧為要</td><td class="item-pts">5</td></tr>
+
+        <tr class="cat-row">
+          <td colspan="3">三、九種恩賜應用之次數、廣度深度及屬靈實際經歷</td>
+          <td class="score-pts">19 分</td>
+        </tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">九大恩賜種類</td><td>九大恩賜應用的種類數</td><td class="item-pts">9</td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">恩賜應用次數</td><td>恩賜在生活中被運用的次數</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">每次聚會運用</td><td>每次聚會中實際運用恩賜的情形</td><td class="item-pts">5</td></tr>
+
+        <tr class="cat-row">
+          <td colspan="3">四、得啟示之深廣，與　神親密，愛主程度，得聖經各樣真理奧秘</td>
+          <td class="score-pts">21 分</td>
+        </tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">得啟示</td><td>從　神所得啟示的深度與廣度</td><td class="item-pts">7</td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">得奧秘</td><td>對聖經奧秘真理的領受</td><td class="item-pts">7</td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">與主親密程度</td><td>與　神同行、相交的深淺</td><td class="item-pts">7</td></tr>
+
+        <tr class="cat-row">
+          <td colspan="3">五、明白　神旨意，行在　神旨意中；得啟示次數及準度（使徒才可能10-20）</td>
+          <td class="score-pts">20 分</td>
+        </tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">明白　神的旨意</td><td>能辨別並明白　神的心意</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">行在旨意中</td><td>實際行在　神旨意中的程度</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">說預言</td><td>說預言的準確度與次數</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">4</td><td class="item-name">與　神同行</td><td>日常生活中與　神同行的實際</td><td class="item-pts">5</td></tr>
+
+        <tr class="total-row">
+          <td colspan="3" class="total-label">加　總</td>
+          <td class="total-pts">100</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /section-wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-cross">✦</div>
+  <p class="footer-verse">「你要全心倚靠耶和華，不可倚靠自己的聰明，<br>在你一切所行的事上都要認定他，他必指引你的路。」</p>
+  <p class="footer-ref">箴言 3:5–6 · Proverbs 3:5–6</p>
+</footer>
+
+</body>
+</html>
