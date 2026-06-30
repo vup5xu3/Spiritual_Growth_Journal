@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基督的家譜 · 三個十四代</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1726; --ink-2:#13203433; --panel:#152437; --panel-2:#1B2E46;
+    --gold:#C9A24B; --gold-b:#E7C66B; --gold-soft:#C9A24B33;
+    --bone:#ECE4D2; --bone-dim:#A9A089; --bone-dimmer:#76705f;
+    --garnet:#B65656; --garnet-deep:#7E3334;
+    --line:rgba(201,162,75,.20);
+    --serif:'Noto Serif TC','Source Han Serif TC','Songti TC',serif;
+    --sans:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    --latin:'Cormorant Garamond',serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #1a2b44 0%, rgba(26,43,68,0) 60%),
+      radial-gradient(900px 500px at 90% 110%, #1d1530 0%, rgba(29,21,48,0) 55%),
+      var(--ink);
+    color:var(--bone); font-family:var(--sans); line-height:1.75;
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  ::selection{background:var(--gold);color:#10182a}
+  .wrap{max-width:1080px;margin:0 auto;padding:34px 22px 90px}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  :focus-visible{outline:2px solid var(--gold-b);outline-offset:3px;border-radius:4px}
+
+  /* ---------- masthead ---------- */
+  .mast{text-align:center;margin-bottom:30px}
+  .kicker{font-family:var(--latin);letter-spacing:.42em;text-transform:uppercase;
+    font-size:.74rem;color:var(--gold);margin:0 0 14px}
+  .kicker .verse{color:var(--bone-dimmer);letter-spacing:.2em}
+  h1.title{font-family:var(--serif);font-weight:900;font-size:clamp(2.1rem,6.2vw,3.4rem);
+    margin:0;letter-spacing:.14em;line-height:1.15}
+  h1.title b{color:var(--gold-b);font-weight:900}
+  .subt{margin:14px auto 0;max-width:620px;color:var(--bone-dim);font-size:1.02rem}
+  .rule{width:54px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    margin:22px auto 0}
+
+  /* ---------- arc signature ---------- */
+  .arc-stage{margin:30px 0 6px;position:relative}
+  .arc-svg{width:100%;height:auto;display:block;overflow:visible}
+  .seg{fill:none;stroke-width:3;stroke-linecap:round;transition:stroke .5s,stroke-width .5s,filter .5s;opacity:.9}
+  .node circle{transition:r .4s, fill .4s, filter .4s}
+  .node-lbl{font-family:var(--serif);font-weight:600;fill:var(--bone);font-size:18px}
+  .node-en{font-family:var(--latin);font-style:italic;fill:var(--bone-dim);font-size:13px}
+  .node-sm{font-family:var(--sans);fill:var(--bone-dimmer);font-size:11px;letter-spacing:.08em}
+  .arc-hit{fill:transparent;cursor:pointer}
+  .arc-caption{text-align:center;color:var(--bone-dimmer);font-size:.82rem;letter-spacing:.14em;margin-top:4px}
+
+  /* ---------- gematria / note strip ---------- */
+  .notes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 8px}
+  .note{background:linear-gradient(180deg,var(--panel),#11203299);border:1px solid var(--line);
+    border-radius:14px;padding:16px 18px}
+  .note h4{margin:0 0 6px;font-family:var(--serif);font-size:1rem;color:var(--gold-b);letter-spacing:.06em}
+  .note p{margin:0;font-size:.9rem;color:var(--bone-dim)}
+  .note .big{font-family:var(--latin);font-size:1.5rem;color:var(--gold);font-weight:600}
+  .women{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .women span{font-family:var(--serif);font-size:.82rem;color:var(--garnet);
+    border:1px solid #b6565644;border-radius:20px;padding:3px 11px;background:#b6565614}
+
+  /* ---------- section heading ---------- */
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin:40px 0 18px}
+  .sec-head .n{font-family:var(--latin);font-size:.78rem;letter-spacing:.3em;color:var(--gold);
+    text-transform:uppercase}
+  .sec-head h2{font-family:var(--serif);font-weight:700;font-size:1.45rem;margin:0;letter-spacing:.08em}
+  .sec-head .ln{flex:1;height:1px;background:var(--line)}
+
+  /* ---------- era cards ---------- */
+  .eras{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .era{position:relative;text-align:left;background:linear-gradient(180deg,var(--panel),#101e3199);
+    border:1px solid var(--line);border-radius:18px;padding:22px 20px 20px;
+    transition:transform .25s,border-color .25s,box-shadow .25s;overflow:hidden;display:flex;flex-direction:column}
+  .era::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;
+    background:var(--era,var(--gold))}
+  .era:hover{transform:translateY(-4px);border-color:#c9a24b66;
+    box-shadow:0 18px 40px -22px var(--era,var(--gold))}
+  .era .rn{font-family:var(--latin);font-size:2.4rem;font-weight:600;color:var(--era,var(--gold));
+    line-height:1;letter-spacing:.04em}
+  .era .gens{font-family:var(--latin);font-size:.74rem;letter-spacing:.24em;color:var(--bone-dimmer);
+    text-transform:uppercase;margin-top:4px}
+  .era h3{font-family:var(--serif);font-size:1.25rem;margin:14px 0 2px;letter-spacing:.06em;color:var(--bone)}
+  .era .arcdir{font-size:.82rem;color:var(--era,var(--gold));letter-spacing:.16em;margin-bottom:12px}
+  .era .span{font-family:var(--serif);font-size:.92rem;color:var(--bone-dim);
+    padding:10px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}
+  .era .span b{color:var(--bone)}
+  .era .ess{font-size:.86rem;color:var(--bone-dim);margin:12px 0 16px;flex:1}
+  .era .go{font-family:var(--latin);letter-spacing:.18em;font-size:.78rem;color:var(--era,var(--gold));
+    text-transform:uppercase;display:inline-flex;align-items:center;gap:7px}
+  .era .go svg{transition:transform .25s}
+  .era:hover .go svg{transform:translateX(4px)}
+
+  /* ---------- set view ---------- */
+  .tabbar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+  .backbtn{font-family:var(--latin);letter-spacing:.16em;text-transform:uppercase;font-size:.76rem;
+    color:var(--bone-dim);display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:8px;
+    transition:color .2s,background .2s}
+  .backbtn:hover{color:var(--gold-b);background:#c9a24b14}
+  .tabs{display:flex;gap:6px;margin-left:auto;background:#0d1828;border:1px solid var(--line);
+    border-radius:12px;padding:5px}
+  .tab{font-family:var(--latin);font-size:1.05rem;font-weight:600;letter-spacing:.1em;
+    padding:6px 16px;border-radius:8px;color:var(--bone-dim);transition:.2s}
+  .tab .zh{font-family:var(--sans);font-size:.66rem;letter-spacing:.1em;display:block;margin-top:-2px}
+  .tab[aria-selected="true"]{background:var(--era,var(--gold));color:#10182a}
+  .tab:not([aria-selected="true"]):hover{color:var(--bone)}
+
+  .set-banner{border:1px solid var(--line);border-radius:18px;padding:24px 26px;margin:14px 0 26px;
+    background:linear-gradient(120deg,var(--panel),#0f1d3066);position:relative;overflow:hidden}
+  .set-banner::before{content:"";position:absolute;top:0;left:0;width:5px;height:100%;background:var(--era,var(--gold))}
+  .set-banner .rn{font-family:var(--latin);font-size:1rem;letter-spacing:.3em;color:var(--era,var(--gold));text-transform:uppercase}
+  .set-banner h2{font-family:var(--serif);font-weight:700;font-size:1.7rem;margin:6px 0 4px;letter-spacing:.06em}
+  .set-banner .meta{font-family:var(--serif);color:var(--bone-dim);font-size:.95rem;margin-bottom:12px}
+  .set-banner .meta b{color:var(--bone)}
+  .set-banner p{margin:0;color:var(--bone-dim);font-size:.95rem;max-width:760px}
+  .set-banner .tags{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .set-banner .tags span{font-size:.76rem;letter-spacing:.12em;color:var(--era,var(--gold));
+    border:1px solid var(--era,var(--gold));border-radius:20px;padding:3px 12px;opacity:.85}
+
+  /* generation list */
+  .genlist{display:flex;flex-direction:column;gap:0}
+  .grow{display:flex;align-items:center;gap:16px;width:100%;text-align:left;padding:15px 16px;
+    border-radius:12px;border:1px solid transparent;transition:background .2s,border-color .2s,transform .12s}
+  .grow:hover{background:#16273d;border-color:var(--line);transform:translateX(3px)}
+  .grow .idx{font-family:var(--latin);font-size:1.45rem;font-weight:600;color:var(--era,var(--gold));
+    width:36px;text-align:center;flex-shrink:0}
+  .grow .nm{font-family:var(--serif);font-size:1.18rem;color:var(--bone);min-width:96px;flex-shrink:0}
+  .grow .en{font-family:var(--latin);font-style:italic;color:var(--bone-dimmer);font-size:.95rem;
+    min-width:96px;flex-shrink:0}
+  .grow .ts{color:var(--bone-dim);font-size:.9rem;flex:1}
+  .grow .chev{color:var(--bone-dimmer);flex-shrink:0;transition:.2s}
+  .grow:hover .chev{color:var(--gold-b);transform:translateX(3px)}
+  .grow.bridge .idx{color:var(--gold-b)}
+  .grow.bridge{background:#c9a24b0e}
+  .badge{font-family:var(--sans);font-size:.66rem;letter-spacing:.1em;padding:2px 8px;border-radius:20px;
+    flex-shrink:0;border:1px solid currentColor}
+  .badge.king{color:var(--gold-b)} .badge.bridge{color:var(--gold-b)}
+  .gdiv{height:1px;background:var(--line);margin:0 16px;opacity:.5}
+
+  /* mother sub-row */
+  .mrow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+    padding:11px 16px 11px 60px;border-radius:12px;transition:background .2s;position:relative}
+  .mrow::before{content:"";position:absolute;left:34px;top:0;bottom:50%;width:1px;background:#b6565655}
+  .mrow::after{content:"";position:absolute;left:34px;top:50%;width:16px;height:1px;background:#b6565655}
+  .mrow:hover{background:#2a1a1f55}
+  .mrow .tag{font-family:var(--serif);font-size:.7rem;color:#10182a;background:var(--garnet);
+    border-radius:5px;padding:2px 7px;flex-shrink:0}
+  .mrow .nm{font-family:var(--serif);font-size:1.02rem;color:var(--garnet);flex-shrink:0}
+  .mrow .en{font-family:var(--latin);font-style:italic;color:#8a6a6a;font-size:.86rem}
+  .mrow .ts{color:var(--bone-dimmer);font-size:.84rem;flex:1}
+
+  /* ---------- detail modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(6,11,20,.72);backdrop-filter:blur(4px);
+    display:flex;justify-content:flex-end;z-index:50;opacity:0;pointer-events:none;transition:opacity .28s}
+  .overlay.open{opacity:1;pointer-events:auto}
+  .sheet{width:min(560px,100%);height:100%;overflow-y:auto;background:linear-gradient(180deg,#16273dF2,#0f1c2eF7);
+    border-left:1px solid var(--line);padding:30px 30px 60px;transform:translateX(40px);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+  .overlay.open .sheet{transform:translateX(0)}
+  .sheet .closerow{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+  .sheet .pillset{font-family:var(--latin);letter-spacing:.2em;font-size:.74rem;text-transform:uppercase;
+    color:var(--era,var(--gold))}
+  .sheet .x{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);display:flex;
+    align-items:center;justify-content:center;color:var(--bone-dim);transition:.2s}
+  .sheet .x:hover{color:var(--bone);border-color:var(--gold);background:#c9a24b14}
+  .d-num{font-family:var(--latin);font-size:.86rem;letter-spacing:.22em;color:var(--bone-dimmer);text-transform:uppercase}
+  .d-name{font-family:var(--serif);font-weight:900;font-size:2.5rem;letter-spacing:.08em;margin:6px 0 2px;line-height:1.1}
+  .d-name.mom{color:var(--garnet)}
+  .d-en{font-family:var(--latin);font-style:italic;font-size:1.3rem;color:var(--bone-dim)}
+  .d-role{display:inline-block;margin-top:12px;font-family:var(--serif);font-size:.92rem;
+    color:var(--bone);border:1px solid var(--line);border-radius:20px;padding:4px 14px;background:#0d182833}
+  .d-block{margin-top:24px}
+  .d-label{font-family:var(--latin);letter-spacing:.22em;text-transform:uppercase;font-size:.72rem;
+    color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:9px}
+  .d-label::before{content:"";width:18px;height:1px;background:var(--gold)}
+  .d-block.elect .d-label{color:var(--garnet)} .d-block.elect .d-label::before{background:var(--garnet)}
+  .d-text{color:var(--bone);font-size:1rem;line-height:1.85}
+  .d-refs{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);
+    font-family:var(--serif);font-size:.86rem;color:var(--bone-dim);letter-spacing:.04em}
+  .d-refs b{color:var(--gold);font-family:var(--latin);letter-spacing:.16em;font-size:.74rem;text-transform:uppercase;margin-right:10px}
+  .d-nav{display:flex;gap:10px;margin-top:28px}
+  .d-nav button{flex:1;border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--bone-dim);
+    font-size:.84rem;display:flex;flex-direction:column;gap:2px;transition:.2s;text-align:left}
+  .d-nav button:hover:not(:disabled){border-color:var(--gold);color:var(--bone);background:#c9a24b0e}
+  .d-nav button:disabled{opacity:.3;cursor:default}
+  .d-nav .dir{font-family:var(--latin);letter-spacing:.16em;font-size:.66rem;text-transform:uppercase}
+  .d-nav .pn{font-family:var(--serif);font-size:1rem;color:inherit}
+  .d-nav .nxt{text-align:right;align-items:flex-end}
+
+  .foot{text-align:center;margin-top:46px;color:var(--bone-dimmer);font-size:.8rem;letter-spacing:.1em}
+  .foot .v{font-family:var(--serif);color:var(--bone-dim);display:block;margin-bottom:6px;font-size:.92rem}
+
+  .hide{display:none!important}
+  .fade{animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  @media(max-width:760px){
+    .wrap{padding:24px 15px 70px}
+    .notes{grid-template-columns:1fr}
+    .eras{grid-template-columns:1fr}
+    .tabs{margin-left:0;width:100%;justify-content:space-between}
+    .grow{gap:10px;padding:13px 10px}
+    .grow .en{display:none}
+    .grow .nm{min-width:auto}
+    .mrow{padding-left:50px}.mrow .en{display:none}
+    .sheet{padding:24px 20px 50px}
+    .node-en{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="mast">
+    <p class="kicker">The Genealogy of Jesus Christ &nbsp;·&nbsp; <span class="verse">Matthew 1 : 1–17</span></p>
+    <h1 class="title">基督的家譜<br><b>三個十四代</b></h1>
+    <p class="subt">從亞伯拉罕到基督，馬太把救恩歷史編成 3 × 14 的結構。每一個名字背後，都是神的應許、人的失敗，與恩典的揀選。</p>
+    <div class="rule"></div>
+  </header>
+
+  <!-- ============ OVERVIEW (framework page) ============ -->
+  <main id="overview">
+
+    <!-- arc signature -->
+    <section class="arc-stage" aria-label="三個十四代的弧線">
+      <svg class="arc-svg" viewBox="0 0 1000 330" role="img" aria-label="上升、下降、再上升的家譜弧線">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#8a6a2e"/><stop offset="1" stop-color="#E7C66B"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#E7C66B"/><stop offset="1" stop-color="#8a3a3a"/>
+          </linearGradient>
+          <linearGradient id="g3" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#8a3a3a"/><stop offset="1" stop-color="#F2DD9A"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#F2DD9A" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#F2DD9A" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- baseline -->
+        <line x1="40" y1="300" x2="960" y2="300" stroke="#2a3c56" stroke-width="1" stroke-dasharray="2 7"/>
+
+        <!-- three segments -->
+        <path class="seg" data-set="0" d="M 60,250 C 170,244 250,150 340,92"  stroke="url(#g1)"/>
+        <path class="seg" data-set="1" d="M 340,92 C 440,150 540,262 640,256" stroke="url(#g2)"/>
+        <path class="seg" data-set="2" d="M 640,256 C 760,250 850,150 942,54" stroke="url(#g3)"/>
+
+        <!-- clickable bands over each segment -->
+        <rect class="arc-hit" data-jump="0" x="40"  y="40" width="300" height="260"></rect>
+        <rect class="arc-hit" data-jump="1" x="340" y="40" width="300" height="260"></rect>
+        <rect class="arc-hit" data-jump="2" x="640" y="40" width="320" height="260"></rect>
+
+        <!-- nodes -->
+        <g class="node">
+          <circle cx="60" cy="250" r="6" fill="#C9A24B"/>
+          <text class="node-lbl" x="60" y="282" text-anchor="middle">亞伯拉罕</text>
+          <text class="node-en"  x="60" y="298" text-anchor="middle">Abraham</text>
+          <text class="node-sm"  x="60" y="226" text-anchor="middle">立約之始</text>
+        </g>
+        <g class="node">
+          <circle cx="340" cy="92" r="7" fill="#E7C66B"/>
+          <text class="node-lbl" x="340" y="74" text-anchor="middle">大衛</text>
+          <text class="node-en"  x="340" y="58" text-anchor="middle">David · the King</text>
+          <text class="node-sm"  x="340" y="112" text-anchor="middle">王位巔峰</text>
+        </g>
+        <g class="node">
+          <circle cx="640" cy="256" r="6" fill="#B65656"/>
+          <text class="node-lbl" x="640" y="288" text-anchor="middle">被擄巴比倫</text>
+          <text class="node-en"  x="640" y="304" text-anchor="middle">Exile</text>
+          <text class="node-sm"  x="640" y="232" text-anchor="middle">至暗·失位</text>
+        </g>
+        <g class="node">
+          <circle cx="942" cy="54" r="11" fill="url(#glow)"/>
+          <circle cx="942" cy="54" r="6" fill="#F2DD9A"/>
+          <text class="node-lbl" x="942" y="36" text-anchor="middle" style="fill:#F2DD9A">基督</text>
+          <text class="node-en"  x="942" y="20" text-anchor="middle">Christ</text>
+          <text class="node-sm"  x="942" y="74" text-anchor="middle">永遠的王</text>
+        </g>
+      </svg>
+      <p class="arc-caption">上升 · 應許　→　下降 · 被擄　→　再上升 · 成就　（點弧線或下方卡片進入該段）</p>
+    </section>
+
+    <!-- gematria + women notes -->
+    <section class="notes">
+      <div class="note">
+        <h4>為什麼偏偏是「十四」？</h4>
+        <p>希伯來文「大衛」（דוד）三個字母的數值 4 + 6 + 4 = <span class="big">14</span>。馬太用三個十四，等於用結構反覆宣告：這位耶穌，就是大衛的子孫、那要來的王。</p>
+      </div>
+      <div class="note">
+        <h4>家譜中的五位女子</h4>
+        <p>猶太家譜罕見列出女性。馬太卻破例放進五位——多是外邦或處境不尋常，正點明：救主為罪人與萬民而來。</p>
+        <div class="women"><span>他瑪</span><span>喇合</span><span>路得</span><span>烏利亞的妻子</span><span>馬利亞</span></div>
+      </div>
+    </section>
+
+    <!-- era cards -->
+    <div class="sec-head">
+      <span class="n">Three Movements</span>
+      <h2>三段救恩弧線</h2>
+      <span class="ln"></span>
+    </div>
+    <section class="eras" id="eraCards"><!-- injected --></section>
+
+    <p class="foot" style="margin-top:34px">
+      <span class="v">「亞伯拉罕的後裔，大衛的子孫，耶穌基督的家譜。」</span>
+      耶哥尼雅同時是第二個十四代的末代與第三個十四代的開端——被擄的轉折，正是新王的起點。
+    </p>
+  </main>
+
+  <!-- ============ SET VIEW ============ -->
+  <main id="setview" class="hide">
+    <div class="tabbar">
+      <button class="backbtn" id="toOverview">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        全覽
+      </button>
+      <div class="tabs" id="setTabs" role="tablist"><!-- injected --></div>
+    </div>
+    <div id="setBanner"></div>
+    <div class="genlist" id="genList"></div>
+  </main>
+
+</div>
+
+<!-- ============ DETAIL SHEET ============ -->
+<div class="overlay" id="overlay">
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="dName"></div>
+</div>
+
+<script>
+/* ============================================================
+   DATA — 馬太福音家譜 三個十四代
+   每位人物：name / en / role / teaser / story / election / refs
+   母親：mother {…}（馬太在生養該子時提到的女子）
+   ============================================================ */
+const SETS = [
+{
+  rn:'I', accent:'#C9A24B',
+  title:'應許與興起', span:'亞伯拉罕 → 大衛', dir:'上升 · 直登王位',
+  theme:'神的應許與揀選',
+  from:'亞伯拉罕（立約之始）', to:'大衛（君王國度的建立）',
+  essence:'神主動立約，從一個人興起一個國，一路上升直到王位，預指那要來的真王。',
+  detail:'這是列祖與立國的時代。從神呼召亞伯拉罕、與他立約（創世記），到大衛登基建立王朝。揀選的依據自始就不是人的功德——雅各未生先蒙揀選、外邦女子被接納入譜——全是恩典。弧線一路上升，指向寶座。',
+  tags:['列祖','立約','上升'],
+  people:[
+    {n:1,name:'亞伯拉罕',en:'Abraham',role:'信心之父',teaser:'蒙召離鄉、因信稱義的立約之祖',
+     story:'神呼召他離開本地本族，應許他後裔如天上的星、地上萬國都要因他得福。他憑信仰望，甚至願獻獨生子以撒，神以公羊代替。',
+     election:'不是因他完美（他曾為自保而稱妻為妹），而是神主權的呼召，加上他「信神，這就算為他的義」的回應。家譜從他起頭，標明耶穌是「亞伯拉罕的後裔」——應許真正的承受者與成就者。',
+     refs:'創12;15:6;22;加3:16'},
+    {n:2,name:'以撒',en:'Isaac',role:'應許之子',teaser:'神蹟所生、被獻於壇上的兒子',
+     story:'在父母年邁（亞伯拉罕百歲、撒拉九十）時按應許出生。後被父帶上摩利亞山獻為祭，神在最後一刻以羊代替，預表後來那真正的獨生子。',
+     election:'他不憑血氣、乃憑應許而生。保羅說「應許的兒女才算為後裔」，他正是恩典超越自然能力的記號。',
+     refs:'創21;22;羅9:7-9'},
+    {n:3,name:'雅各',en:'Jacob',role:'以色列之父',teaser:'抓兄腳跟、與神摔跤而得名以色列',
+     story:'出生時抓住雙生兄長以掃的腳跟；後用計奪取長子名分與祝福。在雅博渡口整夜與神摔跤，被改名「以色列」，從此瘸著腿事奉神。十二支派由他而出。',
+     election:'神在他與以掃未出生、未行善惡之先，就揀選了他——「在乎召人的，不在乎人的行為」。完全是恩典，不是配得。',
+     refs:'創25;27;32;羅9:11-13'},
+    {n:4,name:'猶大',en:'Judah',role:'君王支派之祖',teaser:'與他的弟兄；圭必不離猶大',
+     story:'雅各第四子。曾提議把弟弟約瑟賣為奴；卻在他瑪一事上認錯「她比我更有義」；最終為弟弟便雅憫甘願捨己作擔保，預表那為弟兄捨命的君王。',
+     election:'雖有大過，神仍從猶大支派立君王與彌賽亞：「圭必不離猶大」。馬太特別寫「猶大和他的弟兄」，顯明神揀選的是一個民族，不只是一個人。',
+     refs:'創37;38:26;44;49:10'},
+    {n:5,name:'法勒斯',en:'Perez',role:'猶大正脈',teaser:'與雙生兄謝拉；後者卻先成為正脈',
+     story:'他與謝拉是猶大從他瑪所生的雙生子。生產時謝拉的手先伸出、被繫紅線，卻又縮回，法勒斯反先出來，故得名「法勒斯（裂開、突圍）」。',
+     election:'雙生之中，神揀選了那「後來居上」的延續正脈。又一次顯明：神的揀選常出人意外，不照人所定的次序。',
+     refs:'創38:27-30;得4:18',
+     mother:{name:'他瑪',en:'Tamar',role:'猶大的兒媳',
+       story:'迦南女子。丈夫死後依例本當由小叔續嗣，公公猶大卻失信拖延。她遂蒙面扮為路旁女子，使猶大履行責任，生下法勒斯與謝拉。事發後猶大承認「她比我更有義」。',
+       election:'她以非常手段所爭的不是私慾，而是在約裡的後嗣名分。神紀念她對應許血脈的看重，把一個外邦女子、一件不尋常的事放進救主家譜——預表恩典臨到罪人與外邦。',
+       refs:'創38'}},
+    {n:6,name:'希斯崙',en:'Hezron',role:'隱沒的一代',teaser:'隨雅各全家下埃及，聖經著墨極少',
+     story:'法勒斯之子，名列雅各下埃及的子孫名單中。除族譜外幾乎沒有記載。',
+     election:'在無名與沉默中，神依舊信實地保守應許的血脈不致中斷——神的工作常在隱藏處進行。',
+     refs:'創46:12;得4:18;代上2:5'},
+    {n:7,name:'亞蘭',en:'Ram',role:'隱沒的一代',teaser:'平凡無故事，卻是不可少的一環',
+     story:'希斯崙之子，僅見於族譜記載，沒有留下事蹟。',
+     election:'神的計畫並不靠顯赫人物推動；平凡無聞的人，照樣是祂手中的恩典器皿。',
+     refs:'得4:19;代上2:9-10'},
+    {n:8,name:'亞米拿達',en:'Amminadab',role:'出埃及世代',teaser:'女兒嫁給大祭司亞倫',
+     story:'屬出埃及的世代。他的女兒以利沙巴嫁給大祭司亞倫，使家族與祭司支派聯結。',
+     election:'在曠野世代承先啟後；神在此把君王與祭司兩條線悄悄交織，都指向那既是君王、又是祭司的基督。',
+     refs:'出6:23;民1:7'},
+    {n:9,name:'拿順',en:'Nahshon',role:'猶大支派首領',teaser:'過紅海時，傳統說他第一個踏入水中',
+     story:'出埃及時猶大支派的首領，在曠野獻祭時為各支派之首。按猶太傳統，過紅海那夜眾人遲疑，他憑信第一個踏進海水。',
+     election:'在群體中作領袖、憑信向前。神使猶大支派走在最前頭，預表那位領百姓出死入生的君王。',
+     refs:'民1:7;2:3;7:12'},
+    {n:10,name:'撒門',en:'Salmon',role:'進迦南世代',teaser:'娶了耶利哥的喇合',
+     story:'屬進入迦南的世代。他娶了耶利哥城那位曾為妓、卻因信救了以色列探子的喇合為妻。',
+     election:'他接納一個外邦、有羞恥過往的女子進入以色列，活出律法字句之外的接納與恩典。',
+     refs:'太1:5;得4:21'},
+    {n:11,name:'波阿斯',en:'Boaz',role:'至親救贖者',teaser:'贖回拿俄米家業、迎娶外邦寡婦路得',
+     story:'伯利恆有財有德之人。他善待在田間拾穗的摩押女子路得，後按律法作「至近的親屬」，贖回拿俄米一家的產業並娶了路得，使死人的名分得以存留。',
+     election:'他甘願付上代價去贖回、去接納一個外邦寡婦，正預表那位甘付重價救贖我們的「至親救贖者」基督。',
+     refs:'得2;3;4',
+     mother:{name:'喇合',en:'Rahab',role:'耶利哥的妓女',
+       story:'耶利哥城的妓女，卻因信接待並藏匿以色列的探子，承認「耶和華你們的神本是天上地下的神」。她在窗上繫紅繩為記，全家因而存活。新約稱許她的信心與行為。',
+       election:'純然因信稱義——一個外邦罪中之女，因信被算為義，且被放進彌賽亞的家譜，正是福音的縮影：不在乎出身與過往，只在乎是否信靠。',
+       refs:'書2;6;來11:31;雅2:25'}},
+    {n:12,name:'俄備得',en:'Obed',role:'救贖的果子',teaser:'拿俄米抱在懷中的孩子',
+     story:'波阿斯與路得之子。城裡的婦人為拿俄米歡喜說「拿俄米得孩子了」，老年的空虛因他得了安慰。他是大衛的祖父。',
+     election:'他是整個救贖故事結出的果子，是神「使空虛變為豐滿」的明證，接續了通往大衛的血脈。',
+     refs:'得4:13-17',
+     mother:{name:'路得',en:'Ruth',role:'摩押女子',
+       story:'摩押女子，丈夫死後不肯離開婆婆，說：「你的國就是我的國，你的神就是我的神。」她投靠以色列的神，在波阿斯的田間蒙恩，終成大衛的曾祖母。',
+       election:'摩押人本被律法拒於耶和華會眾之外，她卻因信心與忠誠被接納。恩典勝過律法的隔斷——外人因信成了應許家中的人。',
+       refs:'得1:16-17;申23:3'}},
+    {n:13,name:'耶西',en:'Jesse',role:'大衛之父',teaser:'七子過前，神卻揀選那最小的牧童',
+     story:'伯利恆人，大衛的父親。撒母耳奉命來膏立新王時，耶西先領七個兒子上前，神都不揀選，直到那在田間牧羊、最年幼的大衛被召回來。',
+     election:'「耶和華不像人看人；人是看外貌，耶和華是看內心。」揀選的依據在於神的眼光，不在人所看重的次序與外表。',
+     refs:'撒上16:1-13;賽11:1'},
+    {n:14,name:'大衛',en:'David',role:'合神心意的王',teaser:'家譜第一個高峰；神與他立永遠之約',
+     story:'牧童出身，憑信擊殺巨人歌利亞，成為合神心意的王。他也曾犯下姦淫與謀殺的大罪，卻在先知面前真誠俯伏悔改，寫下痛悔的詩篇。',
+     election:'神揀選他不是因他無罪，而是因他「合神心意」、肯徹底回轉、一生以神為念。神更與他立約：他的後裔必永遠坐國位——這約直接指向基督。第一個十四代在此登頂：從應許之父，到應許之王。',
+     refs:'撒上16-17;撒下7:12-16;詩51;徒13:22'}
+  ]
+},
+{
+  rn:'II', accent:'#B65656',
+  title:'興盛與衰敗', span:'所羅門 → 被擄巴比倫', dir:'下降 · 墮入鎖鏈',
+  theme:'君王的興衰、人的失敗、神的信實',
+  from:'所羅門（承大衛之約、王國鼎盛）', to:'耶哥尼雅（被擄、君王失位）',
+  essence:'從聖殿的榮耀，一路下墜到被擄的鎖鏈。王國因罪傾頹，血脈卻因神守約而存留，等候真王。',
+  detail:'這是猶大列王的時代。從大衛、所羅門的全盛，因著一代代的悖逆，下滑到聖城被毀、百姓被擄。揀選的依據在此格外清楚：保住王朝一線生機的，不是君王的賢德（他們多半失敗），而是神對大衛之約的信實。弧線一路下降，沒入黑暗。',
+  tags:['列王','衰敗','下降'],
+  people:[
+    {n:1,name:'所羅門',en:'Solomon',role:'智慧與聖殿之王',teaser:'求智慧、建聖殿，晚年卻心偏離',
+     story:'大衛與拔示巴所生。他向神求智慧治理百姓，建造了聖殿，國勢鼎盛、萬邦來朝。晚年卻因娶眾多外邦妃嬪、隨從別神，心偏離了耶和華，為日後分裂埋下禍根。',
+     election:'神立他，是「因祂自己的緣故」並信實於對大衛的約。他的成與敗都是警鐘：智慧若不存敬畏，終必跌倒。',
+     refs:'王上3-11',
+     mother:{name:'拔示巴（烏利亞的妻子）',en:'Bathsheba',role:'被點名為「烏利亞的妻子」',
+       story:'馬太刻意不直書她的名字，而稱「烏利亞的妻子」，等於在家譜上記下大衛奪人之妻、又害死忠臣烏利亞的那樁罪案。',
+       election:'神沒有掩飾君王的黑暗；救主家譜裡明明寫著一宗罪，正說明基督是為罪人而來。在大衛悔改之後，神仍從這段關係中興起所羅門——顯明祂能在人的失敗裡成就救恩。',
+       refs:'撒下11;12'}},
+    {n:2,name:'羅波安',en:'Rehoboam',role:'分裂之王',teaser:'加重百姓的軛，王國從此一分為二',
+     story:'所羅門之子。他不聽老臣勸告，反採少年人的話揚言加重百姓的軛，導致北方十支派叛離、以色列國分裂，他只剩猶大與便雅憫。',
+     election:'他失了大半江山，神卻為大衛和耶路撒冷的緣故，在猶大留下一脈不滅。神所保守的是「約」，不是人的賢能。',
+     refs:'王上12;11:13,36'},
+    {n:3,name:'亞比雅',en:'Abijah',role:'承罪的一代',teaser:'行父親的罪，神仍為大衛留下燈光',
+     story:'羅波安之子。聖經說他行他父親一切的罪，心未完全順服神，然而為了大衛的緣故，神仍在耶路撒冷給他留下後嗣（燈光）。',
+     election:'再次顯明：血脈得以存留，全憑神對大衛之約的信實，與後嗣是否敬虔無關。',
+     refs:'王上15:1-8'},
+    {n:4,name:'亞撒',en:'Asa',role:'改革之王（善始）',teaser:'除偶像、潔淨敬拜，晚年卻不再倚靠神',
+     story:'行神眼中看為正的事，除去偶像、革除汙穢的敬拜，是一位有真敬虔的改革之王。可惜晚年面對亞蘭時轉去倚靠人、苛待向他直言的先見，連腳患重病也不求問神。',
+     election:'神揀選並使用一個有真敬虔、卻不完全的人。善始未必善終——提醒人要一生倚靠神，不可半途轉向。',
+     refs:'王上15:9-24;代下16'},
+    {n:5,name:'約沙法',en:'Jehoshaphat',role:'敬虔的改革者',teaser:'差人下鄉教導律法；以讚美迎戰大軍',
+     story:'敬虔的改革之王，差遣官長與利未人帶著律法書下到各城教導百姓。面對聯軍壓境，他設立歌唱讚美的隊伍走在軍前，神就為他爭戰、自亂敵營。',
+     election:'一位以信心與敬拜面對危機的王，活出「這不是你們的爭戰，乃是神的」——蒙保守的線在此顯出敬虔的亮光。',
+     refs:'王上22;代下17;20'},
+    {n:6,name:'約蘭',en:'Joram',role:'敗壞之王',teaser:'娶亞哈之女、殺盡眾弟兄',
+     story:'約沙法之子。他娶了亞哈與耶洗別的女兒亞他利雅，行以色列諸王的惡道，甚至殺盡自己的眾兄弟以鞏固王位。',
+     election:'極其敗壞，神卻「因與大衛所立的約，不肯滅猶大」。馬太在此略去亞哈謝、約阿施、亞瑪謝三王（可能因與亞哈惡室聯姻之故），直接接到烏西雅——顯明家譜要傳的是「約」，神有主權取捨。',
+     refs:'代下21:1-7;王下8'},
+    {n:7,name:'烏西雅',en:'Uzziah',role:'強盛卻驕傲',teaser:'國勢大盛，卻因擅入聖殿燒香長大痲瘋',
+     story:'又名亞撒利雅。年少登基，在位多年國勢強盛、行神眼中看為正的事。卻在強盛時心高氣傲，擅自進聖殿燒香、僭越祭司的職分，當下額上長出大痲瘋，直到死日。',
+     election:'神所興盛的王，也成了「驕傲在敗壞以先」的警戒：敬畏的界線不可跨越，蒙福不等於可以放肆。',
+     refs:'代下26;王下15:1-7'},
+    {n:8,name:'約坦',en:'Jotham',role:'持守正道',teaser:'在父親跌倒的陰影下仍行正道',
+     story:'烏西雅之子。他行神眼中看為正的事，修建聖殿的上門，國勢漸強，因為「他在耶和華他神面前行正道」。',
+     election:'在父親晚年跌倒的陰影下仍持守正道，顯明各人都在神面前自己站立、自己負責——上一代的失敗不是下一代沉淪的藉口。',
+     refs:'代下27;王下15:32-38'},
+    {n:9,name:'亞哈斯',en:'Ahaz',role:'極惡之王',teaser:'使兒女經火；以賽亞向他預言童女懷孕',
+     story:'極其邪惡的王。他鑄巴力像、使自己的兒女經火獻給偶像、效法外邦，甚至改造聖殿的祭壇。先知以賽亞奉命向他應許「必有童女懷孕生子」的以馬內利兆頭，他卻假敬虔地不肯信靠神。',
+     election:'即使在最黑暗的君王身上，神仍保守血脈不斷；並藉這情境賜下那指向基督的童女懷孕之預言——神的救恩計畫，不被人的悖逆攔阻。',
+     refs:'王下16;代下28;賽7:10-14'},
+    {n:10,name:'希西家',en:'Hezekiah',role:'專靠耶和華的王',teaser:'一夜之間，神為他擊殺亞述十八萬五千',
+     story:'大刀闊斧除偶像、潔淨聖殿、重守逾越節、專一倚靠耶和華的改革之王。面對亞述大軍圍城、出言褻瀆，他把恐嚇的信展開在神面前禱告，那一夜神的使者擊殺敵營十八萬五千人。他病危時懇切禱告，神加添他十五年壽數。',
+     election:'「他專靠耶和華……在他前後的猶大列王中沒有一個像他的。」專一倚靠，成了蒙揀選、蒙拯救的記號。',
+     refs:'王下18-20'},
+    {n:11,name:'瑪拿西',en:'Manasseh',role:'最惡、卻真悔改',teaser:'史上最壞的王，被擄後痛悔蒙赦',
+     story:'在位最久、也最邪惡的王：築邱壇、拜星象、行邪術、使兒子經火、使無辜人的血充滿耶路撒冷。後被亞述人用鉤子鉤住、銅鍊鎖去巴比倫；在患難中他極其自卑、痛切禱告，神竟垂聽，使他歸回本國、歸回真神。',
+     election:'史上最惡的人，尚且能因真實的悔改而蒙赦免、得復興——神的恩典深過人的罪，沒有人壞到不能回頭。',
+     refs:'王下21:1-18;代下33:1-13'},
+    {n:12,name:'亞們',en:'Amon',role:'剛硬的一代',teaser:'學父親的惡，卻不學他的悔改',
+     story:'瑪拿西之子。他效法父親早年的惡行，卻不效法父親後來的痛悔自卑，在位僅兩年就被臣僕所殺。',
+     election:'在連串失敗中神仍延續血脈。他也與父親成了強烈對照——同樣的罪，瑪拿西悔改、亞們剛硬，各人都要自負其責。',
+     refs:'王下21:19-26;代下33:21-25'},
+    {n:13,name:'約西亞',en:'Josiah',role:'末世大復興之王',teaser:'修殿時尋得律法書，帶全國立約歸神',
+     story:'八歲登基。修殿時尋得久被遺忘的律法書，他一聽就撕裂衣服、痛悔，帶領全國在神面前立約、徹底除盡偶像，並守了空前盛大的逾越節，是黑暗時代最後一場大復興。',
+     election:'「在他以前沒有王像他盡心、盡性、盡力歸向耶和華。」以神的話為中心的悔改與改革，是被擄前夕最後的亮光。',
+     refs:'王下22-23'},
+    {n:14,name:'耶哥尼雅',en:'Jechoniah',role:'被擄·君王線的絕境',teaser:'與他的弟兄；在位三月即被擄，咒詛臨到',
+     story:'又名約雅斤，約西亞之孫。在位僅三個月就被巴比倫王擄去。先知耶利米預言他「算為無子」，他的後裔再無人坐大衛的寶座、在猶大亨通。',
+     election:'他標誌著君王線的「絕境」——王位被廢、被擄、咒詛臨到。但正是在這看似斷絕之處，神埋下轉折：第三個十四代，將從這「無望」裡生出真正永遠的王。馬太寫「和他的弟兄」，與第一代猶大「和他的弟兄」首尾呼應，顯明被擄中的群體仍在神的約裡。',
+     refs:'王下24:8-17;耶22:24-30'}
+  ]
+},
+{
+  rn:'III', accent:'#E7C66B',
+  title:'黑暗與盼望', span:'被擄 → 基督', dir:'再上升 · 升向真王',
+  theme:'在隱藏與等候中，彌賽亞的盼望成就',
+  from:'耶哥尼雅之後（被擄、失位的至暗）', to:'基督（真王降生、應許成就）',
+  essence:'從被擄的至暗，再升向那真正、永遠的王。在一群無名世代中神默默保守，終於差來基督——復興不在另一個地上君王，而在祂。',
+  detail:'這是被擄之後的時代。撒拉鐵以下，許多名字在舊約再也找不到——這是一群「隱藏的世代」，在沒有君王的年日裡，神在無人記載處一代代信實保守，最終生出真正的王。弧線從谷底再次上升，而且這一次升得最高：超越大衛地上的寶座，直達那永不窮盡的國。',
+  tags:['等候','復興','成就'],
+  people:[
+    {n:1,name:'耶哥尼雅',en:'Jechoniah',role:'橋樑 · 被擄的轉折',teaser:'第二代的末代，也是第三代的開端',
+     story:'同一個人，橫跨兩段：他是被擄的末代君王，咒詛臨到、王位被廢；卻也是「遷到巴比倫之後」生撒拉鐵的那一位——絕境的盡頭，成了盼望的起點。',
+     election:'神讓家譜在他身上轉彎。看似斷絕的王室血脈，因神的信實沒有真正中斷；被擄的羞辱，反成了第三段上升的踏腳石。（他在第二、第三個十四代各算一次，是貫穿全譜的橋樑。）',
+     refs:'太1:11-12;耶22:30'},
+    {n:2,name:'撒拉鐵',en:'Shealtiel',role:'被擄之地承續者',teaser:'在被擄之地承接看似被咒詛的王室血脈',
+     story:'耶哥尼雅之後的一代，在被擄之地接續那「彷彿被咒詛」的王室血脈。',
+     election:'神在被擄的羞辱中，悄悄保守那一線生機。咒詛擋不住應許——這正是第三段的基調。',
+     refs:'太1:12;拉3:2'},
+    {n:3,name:'所羅巴伯',en:'Zerubbabel',role:'歸回·重建聖殿的省長',teaser:'神稱他為「我所揀選的印章」，逆轉咒詛',
+     story:'被擄歸回後，他帶領第一批回歸的人重立聖殿的根基。當百姓灰心，神藉先知向他應許：必使他如同「印章」，因為「我揀選了你」。',
+     election:'這宣告極關鍵——耶利米曾說耶哥尼雅這「印章」要被神從手上摘下；如今神親口宣告「揀選」所羅巴伯，把被廢的印章重新戴上。被擄的王室重新成為神看重的記號，直接預表那將要出現的彌賽亞。',
+     refs:'拉3;該2:20-23;耶22:24'},
+    {n:4,name:'亞比玉',en:'Abiud',role:'隱藏的世代',teaser:'此後諸名，多不見於舊約其他經卷',
+     story:'從這裡開始，家譜上的名字大多在聖經別處再無記載——他們是「隱藏的世代」。',
+     election:'在無人記載的歲月裡，神依舊一代一代信實保守，顯明祂的工作常在隱藏中默默進行。',
+     refs:'太1:13'},
+    {n:5,name:'以利亞敬',en:'Eliakim',role:'隱藏的世代',teaser:'沒有事蹟、沒有名聲，卻不可或缺',
+     story:'屬被擄後那群默默無聞的人，聖經未留下他的故事。',
+     election:'沒有名聲，卻是救恩鏈上不可少的一環——神看重的，從不是知名度。',
+     refs:'太1:13'},
+    {n:6,name:'亞所',en:'Azor',role:'隱藏的世代',teaser:'平凡無聞，仍被數算在家譜中',
+     story:'被擄後等候的世代之一，沒有其他記載。',
+     election:'平凡無聞的人，同樣被神一一數算在彌賽亞的家譜裡。',
+     refs:'太1:13-14'},
+    {n:7,name:'撒督',en:'Zadok',role:'隱藏的世代',teaser:'名意「公義」，彷彿低訴對公義者的盼望',
+     story:'被擄後的一代，除名字外沒有記載。他的名意為「公義」。',
+     election:'在漫長等候的世代裡，這名字本身像在低聲訴說：眾人正盼望那位「公義者」的到來。',
+     refs:'太1:14'},
+    {n:8,name:'亞金',en:'Achim',role:'隱藏的世代',teaser:'神的應許不靠人的偉大維繫',
+     story:'被擄後無名世代中的一代，聖經未載其事。',
+     election:'應許的延續不靠人的偉大或功業，乃靠神自己的信實一路托住。',
+     refs:'太1:14'},
+    {n:9,name:'以律',en:'Eliud',role:'隱藏的世代',teaser:'漫長等候中默默承先啟後',
+     story:'被擄後的一代，沒有留下事蹟。',
+     election:'在看似漫長、神彷彿緘默的等候裡，默默承先啟後的一代。',
+     refs:'太1:14-15'},
+    {n:10,name:'以利亞撒',en:'Eleazar',role:'隱藏的世代',teaser:'名意「神已幫助」',
+     story:'被擄後的一代，名意為「神已幫助」，本身卻沒有記載。',
+     election:'在似乎神隱沒的歲月，連名字都在見證一件事：神仍然幫助。',
+     refs:'太1:15'},
+    {n:11,name:'馬但',en:'Matthan',role:'臨近成就',teaser:'約瑟的祖父一輩，離應許已近',
+     story:'屬約瑟祖父一輩的人，聖經未另記其事。',
+     election:'離應許成就已近，神仍在暗中一針一線地編織，朝著那將要降生的救主收束。',
+     refs:'太1:15'},
+    {n:12,name:'雅各',en:'Jacob',role:'約瑟之父',teaser:'與家譜起頭的先祖雅各同名，呼應將至的高峰',
+     story:'約瑟的父親。他與家譜開頭那位先祖雅各（以色列）同名，彷彿一聲遙遠的回響——故事即將回到「以色列」盼望的高峰。',
+     election:'接續血脈，一路到救主之父，默默完成他在救恩鏈上的使命。',
+     refs:'太1:15-16'},
+    {n:13,name:'約瑟',en:'Joseph',role:'馬利亞的丈夫·義人',teaser:'順服娶馬利亞，賜耶穌大衛的合法王權',
+     story:'大衛的子孫，木匠。發現馬利亞懷孕時，本想暗暗把她休了；天使指示後，他信而順服，娶了馬利亞，為孩子起名耶穌，又帶聖嬰逃往埃及躲避殺害。',
+     election:'他「是個義人」，且信而順服。雖非耶穌肉身的父親，卻藉著他，耶穌在律法上承接了大衛的王室合法繼承權。神揀選一個願意默默順服、捨己保護應許的義人。',
+     refs:'太1:18-25;2:13-15'},
+    {n:14,name:'耶穌基督',en:'Jesus Christ',role:'真正永遠的王',teaser:'三個十四代、所有應許，都匯聚於祂',
+     story:'「耶穌」意為「耶和華是拯救」，「基督」即受膏的王。祂是亞伯拉罕的後裔（應許的成就），是大衛的子孫（王權的成就）；因聖靈成孕、為童貞女所生。天使說：祂要將自己的百姓從罪惡裡救出來。',
+     election:'祂不是被揀選的器皿，而是揀選的源頭與目的。整個家譜、三個十四代、所有的應許、失敗與盼望，都匯聚於祂：在祂裡面「應許」成就、「失敗」被救贖、「盼望」得實現。被擄後的至暗，終於生出永遠的王——祂的國沒有窮盡。',
+     refs:'太1:16-21;路1:31-33',
+     mother:{name:'馬利亞',en:'Mary',role:'童貞女',
+       story:'童貞女，因聖靈懷孕生下耶穌。面對天使，她回應：「我是主的使女，情願照你的話成就在我身上。」並唱出尊主頌，頌讚那顧念卑微、推翻有權者的神。',
+       election:'不是因功德、地位或財富（她出身卑微），乃因神的恩典臨到她——「蒙大恩的女子」——以及她謙卑信靠的順服。家譜在她身上更改了句法：不再說「某某生某某」，而說「約瑟是馬利亞的丈夫，那稱為基督的耶穌是從馬利亞生的」——標明耶穌乃由童貞女所生，是神的兒子，而非單純人的後裔。',
+       refs:'路1:26-55;太1:16'}}
+  ]
+}
+];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const $=(s,el=document)=>el.querySelector(s);
+const overviewEl=$('#overview'), setviewEl=$('#setview');
+let activeSet=0, flat=[], detailIdx=null;
+
+/* arrow + chevron svg helpers */
+const ARROW='<svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h19M15 1l6 6-6 6"/></svg>';
+const CHEV='<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>';
+
+/* ---- overview era cards ---- */
+function buildEraCards(){
+  $('#eraCards').innerHTML=SETS.map((s,i)=>`
+    <button class="era" style="--era:${s.accent}" data-jump="${i}" aria-label="進入第${['一','二','三'][i]}個十四代">
+      <span class="rn">${s.rn}</span>
+      <span class="gens">14 generations</span>
+      <h3>${s.title}</h3>
+      <div class="arcdir">${s.dir}</div>
+      <div class="span"><b>起</b>　${s.from}<br><b>訖</b>　${s.to}</div>
+      <p class="ess">${s.essence}</p>
+      <span class="go">第${['一','二','三'][i]}個十四代 ${ARROW}</span>
+    </button>`).join('');
+}
+
+/* ---- set tabs ---- */
+function buildTabs(){
+  $('#setTabs').innerHTML=SETS.map((s,i)=>`
+    <button class="tab" role="tab" data-set="${i}" aria-selected="${i===activeSet}"
+      style="--era:${SETS[activeSet].accent}">
+      ${s.rn}<span class="zh">第${['一','二','三'][i]}代</span>
+    </button>`).join('');
+}
+
+/* ---- build flat list (gen + mother interleaved) for current set ---- */
+function buildFlat(setIdx){
+  flat=[];
+  SETS[setIdx].people.forEach(p=>{
+    flat.push({kind:'gen',data:p});
+    if(p.mother) flat.push({kind:'mother',data:p.mother,parent:p.name});
+  });
+}
+
+/* ---- render a set ---- */
+function renderSet(setIdx){
+  activeSet=setIdx;
+  const s=SETS[setIdx];
+  document.documentElement.style.setProperty('--era',s.accent);
+  buildTabs();
+  buildFlat(setIdx);
+
+  $('#setBanner').innerHTML=`
+    <div class="set-banner" style="--era:${s.accent}">
+      <div class="rn">${s.rn} · 第${['一','二','三'][setIdx]}個十四代</div>
+      <h2>${s.title}</h2>
+      <div class="meta"><b>${s.span}</b>　·　${s.dir}　·　主題：${s.theme}</div>
+      <p>${s.detail}</p>
+      <div class="tags">${s.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+    </div>`;
+
+  let html='', genCount=0;
+  flat.forEach((item,i)=>{
+    if(item.kind==='gen'){
+      const p=item.data; genCount++;
+      const isKing=p.name==='大衛';
+      const isBridge=(setIdx===2&&p.name==='耶哥尼雅');
+      let badge='';
+      if(isKing) badge='<span class="badge king">王</span>';
+      if(isBridge) badge='<span class="badge bridge">橋樑</span>';
+      if(setIdx===1&&p.n===14) badge='<span class="badge bridge">被擄</span>';
+      html+=`<button class="grow ${isBridge?'bridge':''}" data-i="${i}">
+        <span class="idx">${p.n}</span>
+        <span class="nm">${p.name}</span>
+        <span class="en">${p.en}</span>
+        <span class="ts">${p.teaser}</span>
+        ${badge}${CHEV}
+      </button>`;
+    }else{
+      const m=item.data;
+      html+=`<button class="mrow" data-i="${i}">
+        <span class="tag">母</span>
+        <span class="nm">${m.name}</span>
+        <span class="en">${m.en}</span>
+        <span class="ts">${m.role}</span>
+      </button>`;
+    }
+    // divider between generations (not after mother, not last)
+    const next=flat[i+1];
+    if(item.kind==='gen' && next && next.kind==='gen') html+='<div class="gdiv"></div>';
+    if(item.kind==='mother' && next) html+='<div class="gdiv"></div>';
+  });
+  $('#genList').innerHTML=html;
+
+  overviewEl.classList.add('hide');
+  setviewEl.classList.remove('hide');
+  setviewEl.classList.add('fade');
+  setTimeout(()=>setviewEl.classList.remove('fade'),420);
+  window.scrollTo({top:0,behavior:'smooth'});
+  highlightArc();
+}
+
+/* ---- detail sheet ---- */
+function openDetail(i){
+  detailIdx=i;
+  const item=flat[i];
+  const d=item.data;
+  const isMom=item.kind==='mother';
+  const s=SETS[activeSet];
+  const label=isMom?`${item.parent} 的母親`:`第 ${d.n} 代 / 14`;
+
+  // prev/next within flat list
+  const prev=flat[i-1], next=flat[i+1];
+  const navName=x=>x?(x.kind==='mother'?x.data.name+'（母）':x.data.name):'';
+
+  $('#sheet').innerHTML=`
+    <div class="closerow">
+      <span class="pillset" style="color:${s.accent}">${s.rn} · ${s.title}</span>
+      <button class="x" id="closeSheet" aria-label="關閉">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="d-num">${label}</div>
+    <h1 class="d-name ${isMom?'mom':''}" id="dName">${d.name}</h1>
+    <div class="d-en">${d.en}</div>
+    <div class="d-role">${d.role}</div>
+
+    <div class="d-block">
+      <div class="d-label">小故事 · The Story</div>
+      <div class="d-text">${d.story}</div>
+    </div>
+    <div class="d-block elect">
+      <div class="d-label">神揀選的依據 · Why God Chose</div>
+      <div class="d-text">${d.election}</div>
+    </div>
+    <div class="d-refs"><b>經文</b>${d.refs}</div>
+
+    <div class="d-nav">
+      <button id="prevP" ${prev?'':'disabled'}>
+        <span class="dir">← 上一位</span><span class="pn">${navName(prev)||'—'}</span>
+      </button>
+      <button class="nxt" id="nextP" ${next?'':'disabled'}>
+        <span class="dir">下一位 →</span><span class="pn">${navName(next)||'—'}</span>
+      </button>
+    </div>`;
+
+  $('#overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  $('#closeSheet').onclick=closeDetail;
+  if(prev) $('#prevP').onclick=()=>openDetail(i-1);
+  if(next) $('#nextP').onclick=()=>openDetail(i+1);
+  $('#sheet').scrollTop=0;
+}
+function closeDetail(){
+  $('#overlay').classList.remove('open');
+  document.body.style.overflow='';
+  detailIdx=null;
+}
+
+/* ---- arc highlight on overview ---- */
+function highlightArc(){
+  document.querySelectorAll('.seg').forEach(seg=>{
+    const on=Number(seg.dataset.set)===activeSet;
+    seg.style.strokeWidth=on?'5':'3';
+    seg.style.opacity=on?'1':'.5';
+    seg.style.filter=on?`drop-shadow(0 0 8px ${SETS[activeSet].accent}aa)`:'none';
+  });
+}
+
+/* ---- navigation ---- */
+function toOverview(){
+  setviewEl.classList.add('hide');
+  overviewEl.classList.remove('hide');
+  overviewEl.classList.add('fade');
+  setTimeout(()=>overviewEl.classList.remove('fade'),420);
+  window.scrollTo({top:0,behavior:'smooth'});
+  resetArc();
+}
+function resetArc(){
+  document.querySelectorAll('.seg').forEach(seg=>{
+    seg.style.strokeWidth='3';seg.style.opacity='.9';seg.style.filter='none';
+  });
+}
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+buildEraCards();
+
+document.addEventListener('click',e=>{
+  const jump=e.target.closest('[data-jump]');
+  if(jump){renderSet(Number(jump.dataset.jump));return;}
+
+  const tab=e.target.closest('.tab');
+  if(tab){renderSet(Number(tab.dataset.set));return;}
+
+  const grow=e.target.closest('.grow,.mrow');
+  if(grow){openDetail(Number(grow.dataset.i));return;}
+
+  if(e.target.id==='toOverview'||e.target.closest('#toOverview')){toOverview();return;}
+
+  if(e.target===$('#overlay')) closeDetail();
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&detailIdx!==null) closeDetail();
+  if(detailIdx!==null){
+    if(e.key==='ArrowLeft'&&flat[detailIdx-1]) openDetail(detailIdx-1);
+    if(e.key==='ArrowRight'&&flat[detailIdx+1]) openDetail(detailIdx+1);
+  }
+});
+
+/* arc hover preview (desktop) */
+document.querySelectorAll('.arc-hit').forEach(h=>{
+  h.addEventListener('mouseenter',()=>{
+    const i=Number(h.dataset.jump);
+    document.querySelectorAll('.seg').forEach(seg=>{
+      const on=Number(seg.dataset.set)===i;
+      seg.style.strokeWidth=on?'5':'3';
+      seg.style.opacity=on?'1':'.55';
+      seg.style.filter=on?`drop-shadow(0 0 8px ${SETS[i].accent}aa)`:'none';
+    });
+  });
+  h.addEventListener('mouseleave',resetArc);
+});
+</script>
+</body>
+</html>
