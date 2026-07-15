@@ -222,7 +222,7 @@ header::before{
 /* ── TOOLS (小工具) ── */
 .tools-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  grid-template-columns:repeat(4, minmax(0,1fr));
   gap:12px;
   margin-bottom:16px;
 }
@@ -230,25 +230,33 @@ header::before{
   background:white;
   border:1px solid var(--border);
   border-radius:10px;
-  padding:14px 16px;
+  padding:14px 14px;
   text-decoration:none;color:inherit;
-  display:flex;align-items:center;gap:12px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:8px;
   transition:all .25s;
+  min-width:0;
 }
 .tool-card:hover{
   transform:translateY(-2px);
   box-shadow:0 8px 24px rgba(26,22,18,.08);
   border-color:var(--gold-light);
 }
-.tool-emoji{font-size:20px;line-height:1;flex-shrink:0;}
-.tool-body{flex:1;min-width:0;}
-.tool-name{font-size:14px;font-weight:700;color:var(--ink);}
+.tool-head{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.tool-emoji{font-size:22px;line-height:1;flex-shrink:0;}
+.tool-name{font-size:13px;font-weight:700;color:var(--ink);line-height:1.4;}
 .tool-desc{
   font-family:'Noto Sans TC',sans-serif;
   font-size:11px;color:var(--ink-mute);
-  margin-top:3px;line-height:1.6;
+  line-height:1.6;
 }
-.tool-arrow{color:var(--gold-deep);opacity:.6;flex-shrink:0;}
+.tool-arrow{color:var(--gold-deep);opacity:.5;flex-shrink:0;}
+
+@media(max-width:900px){
+  .tools-grid{grid-template-columns:repeat(2, minmax(0,1fr));}
+}
+@media(max-width:480px){
+  .tools-grid{grid-template-columns:1fr;}
+}
 
 /* ── QUOTIENT TABLE ── */
 .quotient-table{
@@ -751,21 +759,39 @@ footer{
   <div class="tools-grid">
 
     <a class="tool-card" href="https://hopeseed-sog-tpe.vercel.app/" target="_blank">
-      <div class="tool-emoji">🌾</div>
-      <div class="tool-body">
-        <div class="tool-name">福音種子庫</div>
-        <div class="tool-desc">精選傳福音素材，願每一顆種子都能落在好土</div>
+      <div class="tool-head">
+        <div class="tool-emoji">🌾</div>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </div>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <div class="tool-name">福音種子庫</div>
+      <div class="tool-desc">精選傳福音素材，願每一顆種子都能落在好土</div>
     </a>
 
     <a class="tool-card" href="https://navigationday.app/" target="_blank">
-      <div class="tool-emoji">🧭</div>
-      <div class="tool-body">
-        <div class="tool-name">導航日</div>
-        <div class="tool-desc">長期自我覺察工具</div>
+      <div class="tool-head">
+        <div class="tool-emoji">🧭</div>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </div>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <div class="tool-name">導航日</div>
+      <div class="tool-desc">長期自我覺察工具</div>
+    </a>
+
+    <a class="tool-card" href="https://ballet-formation-2026.web.app/" target="_blank">
+      <div class="tool-head">
+        <div class="tool-emoji">🩰</div>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+      <div class="tool-name">舞蹈編輯系統</div>
+      <div class="tool-desc">佩製作</div>
+    </a>
+
+    <a class="tool-card" href="https://2026-sog-christmas-tpe.vercel.app/" target="_blank">
+      <div class="tool-head">
+        <div class="tool-emoji">🎄</div>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+      <div class="tool-name">教會記事</div>
+      <div class="tool-desc">2026 芭蕾聖誕討論</div>
     </a>
 
   </div>
