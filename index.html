@@ -401,51 +401,62 @@ footer{
 /* ── SECTION NAV DOTS ── */
 .section-nav{
   position:fixed;
-  right:22px;top:50%;
+  right:18px;top:50%;
   transform:translateY(-50%);
   z-index:50;
   display:flex;flex-direction:column;
-  gap:16px;
-  align-items:center;
+  align-items:flex-end;
+  gap:4px;
+  padding:12px 10px;
+  border-radius:14px;
+  background:transparent;
+  border:1px solid transparent;
+  box-shadow:none;
+  transition:background .25s, border-color .25s, box-shadow .25s;
+}
+.section-nav:hover{
+  background:var(--parchment);
+  border-color:var(--border);
+  box-shadow:0 16px 40px rgba(26,22,18,.14);
 }
 .nav-dot{
-  position:relative;
-  width:10px;height:10px;
+  display:flex;align-items:center;
+  gap:10px;
+  padding:6px 2px;
+  text-decoration:none;
+  cursor:pointer;
+}
+.nav-dot-label{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:12px;
+  letter-spacing:.03em;
+  color:var(--ink-mute);
+  white-space:nowrap;
+  max-width:0;
+  opacity:0;
+  overflow:hidden;
+  transition:max-width .3s ease, opacity .2s ease, color .2s ease;
+}
+.section-nav:hover .nav-dot-label{max-width:110px;opacity:1;}
+.nav-dot-bullet{
+  width:7px;height:7px;
   border-radius:50%;
   background:var(--parchment-dark);
   border:1px solid var(--border);
-  text-decoration:none;
-  transition:all .25s;
   flex-shrink:0;
+  transition:all .25s;
 }
-.nav-dot:hover{background:var(--gold-light);transform:scale(1.3);}
-.nav-dot.active{
+.nav-dot:hover .nav-dot-bullet{background:var(--gold-light);transform:scale(1.25);}
+.nav-dot.active .nav-dot-bullet{
   background:var(--gold-deep);
   border-color:var(--gold-deep);
-  transform:scale(1.35);
+  transform:scale(1.3);
 }
-.nav-dot-label{
-  position:absolute;
-  right:22px;top:50%;
-  transform:translateY(-50%);
-  white-space:nowrap;
-  background:var(--ink);
-  color:var(--gold-light);
-  font-family:'Noto Sans TC',sans-serif;
-  font-size:11px;
-  letter-spacing:.05em;
-  padding:6px 12px;
-  border-radius:6px;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .2s;
-}
-.section-nav:hover .nav-dot-label{opacity:1;}
-.nav-dot.active .nav-dot-label{color:var(--gold-light);}
+.nav-dot.active .nav-dot-label{color:var(--gold-deep);}
 
 @media(max-width:640px){
-  .section-nav{right:10px;gap:12px;}
-  .nav-dot{width:8px;height:8px;}
+  .section-nav{right:8px;padding:10px 8px;}
+  .nav-dot-bullet{width:6px;height:6px;}
 }
 
 /* ── AUTH GATE ── */
@@ -699,7 +710,9 @@ footer{
 
   </div>
 
-  <!-- ── 記錄表格 ── -->
+  <!-- ── 記錄表格（僅限 Google 帳戶登入者查看） ── -->
+  <div id="records-section">
+
   <div class="section-head" id="sec-records">
     <span class="section-icon">📊</span>
     <span class="section-title">Records · 紀錄表格</span>
@@ -726,6 +739,8 @@ footer{
     </a>
 
   </div>
+
+  </div><!-- /records-section -->
 
   <!-- ── 小工具 ── -->
   <div class="section-head" id="sec-tools">
@@ -867,11 +882,11 @@ footer{
 
 <!-- ── 區塊導覽小圓點 ── -->
 <nav class="section-nav" id="section-nav" aria-label="區塊導覽">
-  <a class="nav-dot" data-target="sec-notebooks" href="#sec-notebooks"><span class="nav-dot-label">筆記本</span></a>
-  <a class="nav-dot" data-target="sec-records" href="#sec-records"><span class="nav-dot-label">紀錄表格</span></a>
-  <a class="nav-dot" data-target="sec-tools" href="#sec-tools"><span class="nav-dot-label">小工具</span></a>
-  <a class="nav-dot" data-target="sec-quotient" href="#sec-quotient"><span class="nav-dot-label">二十商數</span></a>
-  <a class="nav-dot" data-target="sec-score" href="#sec-score"><span class="nav-dot-label">靈程評分</span></a>
+  <a class="nav-dot" data-target="sec-notebooks" href="#sec-notebooks"><span class="nav-dot-label">筆記本</span><span class="nav-dot-bullet"></span></a>
+  <a class="nav-dot" data-target="sec-records" href="#sec-records"><span class="nav-dot-label">紀錄表格</span><span class="nav-dot-bullet"></span></a>
+  <a class="nav-dot" data-target="sec-tools" href="#sec-tools"><span class="nav-dot-label">小工具</span><span class="nav-dot-bullet"></span></a>
+  <a class="nav-dot" data-target="sec-quotient" href="#sec-quotient"><span class="nav-dot-label">二十商數</span><span class="nav-dot-bullet"></span></a>
+  <a class="nav-dot" data-target="sec-score" href="#sec-score"><span class="nav-dot-label">靈程評分</span><span class="nav-dot-bullet"></span></a>
 </nav>
 
 <!-- FOOTER -->
@@ -951,7 +966,7 @@ footer{
     var pos = window.scrollY + window.innerHeight * 0.35;
     var current = sections[0];
     sections.forEach(function(sec){
-      if (sec && sec.offsetTop <= pos) current = sec;
+      if (sec && sec.offsetParent !== null && sec.offsetTop <= pos) current = sec;
     });
     dots.forEach(function(dot){
       dot.classList.toggle('active', current && dot.dataset.target === current.id);
@@ -983,9 +998,16 @@ footer{
     [stepChoice, stepMember, stepQuestion].forEach(function(s){ s.hidden = (s !== step); });
   }
 
-  function unlock(){
+  function unlock(isGuest){
     gate.style.display = 'none';
     pageContent.style.display = '';
+    if (isGuest){
+      var recordsSection = document.getElementById('records-section');
+      if (recordsSection) recordsSection.style.display = 'none';
+      var recordsDot = document.querySelector('.nav-dot[data-target="sec-records"]');
+      if (recordsDot) recordsDot.style.display = 'none';
+    }
+    window.dispatchEvent(new Event('resize'));
   }
 
   function parseJwt(token){
@@ -1002,7 +1024,7 @@ footer{
     var payload = response && response.credential ? parseJwt(response.credential) : null;
     if (payload && payload.email && payload.email_verified && payload.email.toLowerCase() === ALLOWED_EMAIL){
       googleError.hidden = true;
-      unlock();
+      unlock(false);
     } else {
       googleError.hidden = false;
     }
@@ -1045,7 +1067,7 @@ footer{
     var ok = TEACHING_TOKENS.every(function(tok){ return val.indexOf(tok) !== -1; });
     if (ok){
       answerError.hidden = true;
-      unlock();
+      unlock(true);
     } else {
       answerError.hidden = false;
       setTimeout(function(){ window.location.href = WRONG_ANSWER_URL; }, 1500);
