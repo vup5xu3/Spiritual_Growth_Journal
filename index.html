@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chih-Hsin の 屬靈成長筆記本</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700;900&family=Noto+Sans+TC:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root{
   --ink:#1a1612;--ink-soft:#2d2820;--ink-mute:#5a5248;
@@ -218,6 +219,37 @@ header::before{
   margin-top:6px;
 }
 
+/* ── TOOLS (小工具) ── */
+.tools-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:12px;
+  margin-bottom:16px;
+}
+.tool-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px 16px;
+  text-decoration:none;color:inherit;
+  display:flex;align-items:center;gap:12px;
+  transition:all .25s;
+}
+.tool-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(26,22,18,.08);
+  border-color:var(--gold-light);
+}
+.tool-emoji{font-size:20px;line-height:1;flex-shrink:0;}
+.tool-body{flex:1;min-width:0;}
+.tool-name{font-size:14px;font-weight:700;color:var(--ink);}
+.tool-desc{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11px;color:var(--ink-mute);
+  margin-top:3px;line-height:1.6;
+}
+.tool-arrow{color:var(--gold-deep);opacity:.6;flex-shrink:0;}
+
 /* ── QUOTIENT TABLE ── */
 .quotient-table{
   width:100%;
@@ -268,6 +300,28 @@ header::before{
   font-size:12px;
   color:var(--ink-mute);
 }
+.q-score-head{text-align:center;width:70px;}
+.q-score-cell{text-align:center;width:70px;}
+.score-select{
+  width:60px;
+  padding:5px 6px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--parchment-mid);
+  color:var(--ink);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:12px;
+  text-align:center;
+  cursor:pointer;
+}
+.score-select:focus{outline:none;border-color:var(--gold);}
+.quotient-total-row td{
+  padding:14px 16px;
+  background:var(--gold-pale);
+  border-top:2px solid var(--gold);
+  font-weight:900;font-size:15px;color:var(--ink);
+}
+.quotient-total-pts{text-align:center;font-size:18px;color:var(--rust);}
 
 /* ── SCORING TABLE ── */
 .score-wrap{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
@@ -306,7 +360,7 @@ header::before{
   padding-right:8px;
 }
 .item-pts{
-  text-align:right;width:36px;
+  text-align:right;width:70px;
   font-family:'Noto Sans TC',sans-serif;
   font-size:12px;color:var(--rust);font-weight:700;
   white-space:nowrap;
@@ -344,6 +398,139 @@ footer{
   letter-spacing:.08em;
 }
 
+/* ── SECTION NAV DOTS ── */
+.section-nav{
+  position:fixed;
+  right:22px;top:50%;
+  transform:translateY(-50%);
+  z-index:50;
+  display:flex;flex-direction:column;
+  gap:16px;
+  align-items:center;
+}
+.nav-dot{
+  position:relative;
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--parchment-dark);
+  border:1px solid var(--border);
+  text-decoration:none;
+  transition:all .25s;
+  flex-shrink:0;
+}
+.nav-dot:hover{background:var(--gold-light);transform:scale(1.3);}
+.nav-dot.active{
+  background:var(--gold-deep);
+  border-color:var(--gold-deep);
+  transform:scale(1.35);
+}
+.nav-dot-label{
+  position:absolute;
+  right:22px;top:50%;
+  transform:translateY(-50%);
+  white-space:nowrap;
+  background:var(--ink);
+  color:var(--gold-light);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11px;
+  letter-spacing:.05em;
+  padding:6px 12px;
+  border-radius:6px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+}
+.section-nav:hover .nav-dot-label{opacity:1;}
+.nav-dot.active .nav-dot-label{color:var(--gold-light);}
+
+@media(max-width:640px){
+  .section-nav{right:10px;gap:12px;}
+  .nav-dot{width:8px;height:8px;}
+}
+
+/* ── AUTH GATE ── */
+.auth-gate{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(201,168,76,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(139,58,42,.08) 0%, transparent 60%),
+    linear-gradient(180deg, #1a1612 0%, #2d2820 100%);
+}
+.auth-card{
+  width:100%;max-width:380px;
+  background:var(--parchment);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:36px 30px 30px;
+  text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,.35);
+  animation:fadeUp .4s ease both;
+}
+.auth-icon{font-size:26px;color:var(--gold-deep);margin-bottom:10px;}
+.auth-title{
+  font-family:'Noto Serif TC',serif;
+  font-size:19px;font-weight:700;color:var(--ink);
+  margin-bottom:8px;line-height:1.5;
+}
+.auth-sub{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:12px;color:var(--ink-mute);
+  line-height:1.7;margin-bottom:22px;
+}
+#g-signin-btn{display:flex;justify-content:center;margin-bottom:18px;min-height:40px;}
+.auth-divider{
+  display:flex;align-items:center;gap:12px;
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11px;color:var(--ink-mute);
+  margin:18px 0;
+}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.auth-btn{
+  width:100%;
+  padding:12px 18px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:white;
+  color:var(--ink);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:13px;font-weight:500;
+  cursor:pointer;
+  transition:all .2s;
+}
+.auth-btn:hover{border-color:var(--gold);background:var(--gold-pale);}
+.auth-btn.primary{
+  background:var(--ink);color:var(--gold-light);border-color:var(--ink);
+}
+.auth-btn.primary:hover{background:var(--ink-soft);}
+.auth-btn-row{display:flex;gap:10px;}
+.auth-btn-row .auth-btn{flex:1;}
+.auth-input{
+  width:100%;
+  padding:11px 14px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:white;
+  color:var(--ink);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:13px;
+  margin-bottom:12px;
+  text-align:center;
+}
+.auth-input:focus{outline:none;border-color:var(--gold);}
+.auth-error{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11.5px;color:var(--rust);
+  margin-top:14px;line-height:1.6;
+}
+.auth-back{
+  display:inline-block;margin-top:16px;
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:11px;color:var(--ink-mute);
+  cursor:pointer;text-decoration:underline;
+}
+
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
   header{padding:48px 16px 40px;}
@@ -370,6 +557,45 @@ footer{
 </head>
 <body>
 
+<!-- ── AUTH GATE ── -->
+<div class="auth-gate" id="auth-gate">
+
+  <!-- 步驟一：選擇登入方式 -->
+  <div class="auth-card" id="auth-step-choice">
+    <div class="auth-icon">✦</div>
+    <div class="auth-title">請先登入</div>
+    <div class="auth-sub">此為個人屬靈筆記本，請選擇登入方式以繼續瀏覽。</div>
+    <div id="g-signin-btn"></div>
+    <div class="auth-divider">或</div>
+    <button class="auth-btn" id="guest-btn" type="button">以訪客身分登入</button>
+    <p class="auth-error" id="google-error" hidden>此 Google 帳號無權限查看，請改用訪客身分登入。</p>
+  </div>
+
+  <!-- 步驟二：是否為神之子基督教會成員 -->
+  <div class="auth-card" id="auth-step-member" hidden>
+    <div class="auth-icon">✦</div>
+    <div class="auth-title">您是否為神之子基督教會成員？</div>
+    <div class="auth-btn-row">
+      <button class="auth-btn primary" id="member-yes-btn" type="button">是</button>
+      <button class="auth-btn" id="member-no-btn" type="button">否</button>
+    </div>
+    <span class="auth-back" id="back-to-choice-1" role="button">← 返回</span>
+  </div>
+
+  <!-- 步驟三：教會重點教導問題 -->
+  <div class="auth-card" id="auth-step-question" hidden>
+    <div class="auth-icon">✦</div>
+    <div class="auth-title">神之子體系的重點教導是什麼？</div>
+    <div class="auth-sub">請直接輸入您的答案。</div>
+    <input type="text" class="auth-input" id="teaching-answer" placeholder="請輸入答案" autocomplete="off">
+    <button class="auth-btn primary" id="submit-answer-btn" type="button">送出</button>
+    <p class="auth-error" id="answer-error" hidden>答案不完整，即將為您導向說明頁面...</p>
+  </div>
+
+</div>
+
+<div id="page-content" style="display:none">
+
 <!-- HEADER -->
 <header>
   <div class="header-inner">
@@ -386,9 +612,9 @@ footer{
 <div class="section-wrap">
 
   <!-- ── 筆記本 ── -->
-  <div class="section-head">
+  <div class="section-head" id="sec-notebooks">
     <span class="section-icon">📚</span>
-    <span class="section-title">Three Notebooks · 三大屬靈筆記本</span>
+    <span class="section-title">Six Notebooks · 六大屬靈筆記本</span>
   </div>
 
   <div class="notebooks-grid">
@@ -474,7 +700,7 @@ footer{
   </div>
 
   <!-- ── 記錄表格 ── -->
-  <div class="section-head">
+  <div class="section-head" id="sec-records">
     <span class="section-icon">📊</span>
     <span class="section-title">Records · 紀錄表格</span>
   </div>
@@ -501,8 +727,36 @@ footer{
 
   </div>
 
+  <!-- ── 小工具 ── -->
+  <div class="section-head" id="sec-tools">
+    <span class="section-icon">🧰</span>
+    <span class="section-title">Toolkit · 小工具</span>
+  </div>
+
+  <div class="tools-grid">
+
+    <a class="tool-card" href="https://hopeseed-sog-tpe.vercel.app/" target="_blank">
+      <div class="tool-emoji">🌾</div>
+      <div class="tool-body">
+        <div class="tool-name">福音種子庫</div>
+        <div class="tool-desc">精選傳福音素材，願每一顆種子都能落在好土</div>
+      </div>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+
+    <a class="tool-card" href="https://navigationday.app/" target="_blank">
+      <div class="tool-emoji">🧭</div>
+      <div class="tool-body">
+        <div class="tool-name">導航日</div>
+        <div class="tool-desc">長期自我覺察工具</div>
+      </div>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="tool-arrow"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+
+  </div>
+
   <!-- ── 二十個美好商數 ── -->
-  <div class="section-head">
+  <div class="section-head" id="sec-quotient">
     <span class="section-icon">✨</span>
     <span class="section-title">Twenty Quotients · 二十種美好商數</span>
   </div>
@@ -513,89 +767,96 @@ footer{
         <th>No.</th>
         <th>商數</th>
         <th>描述</th>
+        <th class="q-score-head">分數</th>
       </tr>
     </thead>
-    <tbody>
-      <tr><td>1</td><td>逆境商數</td><td>指一個人的挫折忍受力或是面對逆境而加以處理的能力</td></tr>
-      <tr><td>2</td><td>美麗商數</td><td>對於週遭的事物均能以開朗接納的心胸去欣賞事物的結構；很會看別人的優點，看別人比自己強</td></tr>
-      <tr><td>3</td><td>創意商數</td><td>生活中的各種事務處理、問題的解決，能有新的方式，且處理的效果比其他舊有的方式為佳</td></tr>
-      <tr><td>4</td><td>發展商數</td><td>促使物態或事態轉變的能力，這種能力也是人類社會進步的泉源</td></tr>
-      <tr><td>5</td><td>情緒商數</td><td>面對多元的變化衝擊，情緒的穩定程度</td></tr>
-      <tr><td>6</td><td>信心商數</td><td>對自己是否有自信心；在屬靈上你對主是否有信心</td></tr>
-      <tr><td>7</td><td>語法商數</td><td>運用適當的語文詞句，從事溝通表達而不致於被曲解或模糊的能力</td></tr>
-      <tr><td>8</td><td>健康商數</td><td>身心靈的健康蒙　神保守的程度；唯有行真理，遵行　神的旨意才不會把　神所賜的福分漏光</td></tr>
-      <tr><td>9</td><td>智力商數</td><td>理解聖經真理，理解牧師書籍、主日靈糧</td></tr>
-      <tr><td>10</td><td>判斷商數</td><td>充實自己，培養有足夠的悟性判斷力；聖工上願意完全順服　神，凡事藉著團隊禱告求問　神</td></tr>
-      <tr><td>11</td><td>知識商數</td><td>在動態變化的環境中，能夠及時充實所需、解決問題之知識的能力；求知的心態、行為</td></tr>
-      <tr><td>12</td><td>領導商數</td><td>要有基督馨香之氣，要說合宜造就人的話，要有擔當、有肩膀、有責任心，願服事全群</td></tr>
-      <tr><td>13</td><td>管理商數</td><td>要先把自己管理好，不要一直盯著別人的缺點看；不要只發現問題，卻不會解決問題</td></tr>
-      <tr><td>14</td><td>自然商數</td><td>欣賞大自然，了解大自然，進而維護大自然，適度應用大自然</td></tr>
-      <tr><td>15</td><td>次序商數</td><td>神→家庭→教會的排序</td></tr>
-      <tr><td>16</td><td>耐心商數</td><td>高耐心商數的人，心態穩定，安心以對萬事萬物，易產生信心、恆心、熱心與愛心</td></tr>
-      <tr><td>17</td><td>樸素商數</td><td>知足常樂，不要過奢華的生活</td></tr>
-      <tr><td>18</td><td>關係商數</td><td>如何有效運用各種網絡，增進人際活動的效率與效果；是否能把人際關係處理好</td></tr>
-      <tr><td>19</td><td>服務商數</td><td>建立自己服務他人的技能，進而精準地接受合適服務的能力</td></tr>
-      <tr><td>20</td><td>機智商數</td><td>也就是臨場的反應與處理能力</td></tr>
+    <tbody id="quotient-body">
+      <tr><td>1</td><td>逆境商數</td><td>指一個人的挫折忍受力或是面對逆境而加以處理的能力</td><td class="q-score-cell"></td></tr>
+      <tr><td>2</td><td>美麗商數</td><td>對於週遭的事物均能以開朗接納的心胸去欣賞事物的結構；很會看別人的優點，看別人比自己強</td><td class="q-score-cell"></td></tr>
+      <tr><td>3</td><td>創意商數</td><td>生活中的各種事務處理、問題的解決，能有新的方式，且處理的效果比其他舊有的方式為佳</td><td class="q-score-cell"></td></tr>
+      <tr><td>4</td><td>發展商數</td><td>促使物態或事態轉變的能力，這種能力也是人類社會進步的泉源</td><td class="q-score-cell"></td></tr>
+      <tr><td>5</td><td>情緒商數</td><td>面對多元的變化衝擊，情緒的穩定程度</td><td class="q-score-cell"></td></tr>
+      <tr><td>6</td><td>信心商數</td><td>對自己是否有自信心；在屬靈上你對主是否有信心</td><td class="q-score-cell"></td></tr>
+      <tr><td>7</td><td>語法商數</td><td>運用適當的語文詞句，從事溝通表達而不致於被曲解或模糊的能力</td><td class="q-score-cell"></td></tr>
+      <tr><td>8</td><td>健康商數</td><td>身心靈的健康蒙　神保守的程度；唯有行真理，遵行　神的旨意才不會把　神所賜的福分漏光</td><td class="q-score-cell"></td></tr>
+      <tr><td>9</td><td>智力商數</td><td>理解聖經真理，理解牧師書籍、主日靈糧</td><td class="q-score-cell"></td></tr>
+      <tr><td>10</td><td>判斷商數</td><td>充實自己，培養有足夠的悟性判斷力；聖工上願意完全順服　神，凡事藉著團隊禱告求問　神</td><td class="q-score-cell"></td></tr>
+      <tr><td>11</td><td>知識商數</td><td>在動態變化的環境中，能夠及時充實所需、解決問題之知識的能力；求知的心態、行為</td><td class="q-score-cell"></td></tr>
+      <tr><td>12</td><td>領導商數</td><td>要有基督馨香之氣，要說合宜造就人的話，要有擔當、有肩膀、有責任心，願服事全群</td><td class="q-score-cell"></td></tr>
+      <tr><td>13</td><td>管理商數</td><td>要先把自己管理好，不要一直盯著別人的缺點看；不要只發現問題，卻不會解決問題</td><td class="q-score-cell"></td></tr>
+      <tr><td>14</td><td>自然商數</td><td>欣賞大自然，了解大自然，進而維護大自然，適度應用大自然</td><td class="q-score-cell"></td></tr>
+      <tr><td>15</td><td>次序商數</td><td>神→家庭→教會的排序</td><td class="q-score-cell"></td></tr>
+      <tr><td>16</td><td>耐心商數</td><td>高耐心商數的人，心態穩定，安心以對萬事萬物，易產生信心、恆心、熱心與愛心</td><td class="q-score-cell"></td></tr>
+      <tr><td>17</td><td>樸素商數</td><td>知足常樂，不要過奢華的生活</td><td class="q-score-cell"></td></tr>
+      <tr><td>18</td><td>關係商數</td><td>如何有效運用各種網絡，增進人際活動的效率與效果；是否能把人際關係處理好</td><td class="q-score-cell"></td></tr>
+      <tr><td>19</td><td>服務商數</td><td>建立自己服務他人的技能，進而精準地接受合適服務的能力</td><td class="q-score-cell"></td></tr>
+      <tr><td>20</td><td>機智商數</td><td>也就是臨場的反應與處理能力</td><td class="q-score-cell"></td></tr>
     </tbody>
+    <tfoot>
+      <tr class="quotient-total-row">
+        <td colspan="3">加　總</td>
+        <td class="quotient-total-pts" id="quotient-total">0</td>
+      </tr>
+    </tfoot>
   </table>
 
   <!-- ── 靈程評分 ── -->
-  <div class="section-head">
+  <div class="section-head" id="sec-score">
     <span class="section-icon">📜</span>
     <span class="section-title">Spiritual Scoring · 靈程評分項目</span>
   </div>
 
   <div class="score-wrap">
     <table class="score-table">
-      <tbody>
+      <tbody id="score-body">
 
         <tr class="cat-row">
           <td colspan="3">一、生命的深度與廣度</td>
           <td class="score-pts">20 分</td>
         </tr>
-        <tr class="item-row"><td class="item-num">1</td><td class="item-name">信主的年日</td><td>信主時間長短與生命成熟度</td><td class="item-pts">4</td></tr>
-        <tr class="item-row"><td class="item-num">2</td><td class="item-name">明白聖經程度 ★</td><td>對聖經真理的理解與掌握</td><td class="item-pts">4</td></tr>
-        <tr class="item-row"><td class="item-num">3</td><td class="item-name">言行的總和</td><td>言語與行為的整體一致性</td><td class="item-pts">4</td></tr>
-        <tr class="item-row"><td class="item-num">4</td><td class="item-name">捨己順服的功課</td><td>在生活中學習捨己、順服神與人</td><td class="item-pts">4</td></tr>
-        <tr class="item-row"><td class="item-num">5</td><td class="item-name">為主受苦</td><td>為信仰願意付代價、忍受苦難</td><td class="item-pts">4</td></tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">信主的年日</td><td>信主時間長短與生命成熟度</td><td class="item-pts" data-max="4"></td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">明白聖經程度 ★</td><td>對聖經真理的理解與掌握</td><td class="item-pts" data-max="4"></td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">言行的總和</td><td>言語與行為的整體一致性</td><td class="item-pts" data-max="4"></td></tr>
+        <tr class="item-row"><td class="item-num">4</td><td class="item-name">捨己順服的功課</td><td>在生活中學習捨己、順服神與人</td><td class="item-pts" data-max="4"></td></tr>
+        <tr class="item-row"><td class="item-num">5</td><td class="item-name">為主受苦</td><td>為信仰願意付代價、忍受苦難</td><td class="item-pts" data-max="4"></td></tr>
 
         <tr class="cat-row">
           <td colspan="3">二、服事的深度與廣度、時日、工場 ★</td>
           <td class="score-pts">20 分</td>
         </tr>
-        <tr class="item-row"><td class="item-num">1</td><td class="item-name">服事時間年限工場</td><td>服事的年限與工場大小</td><td class="item-pts">5</td></tr>
-        <tr class="item-row"><td class="item-num">2</td><td class="item-name">服事的果效</td><td>服事所結的果子與影響力</td><td class="item-pts">5</td></tr>
-        <tr class="item-row"><td class="item-num">3</td><td class="item-name">教會成長比例</td><td>所服事之教會成長的比例</td><td class="item-pts">5</td></tr>
-        <tr class="item-row"><td class="item-num">4</td><td class="item-name">講台的供應</td><td>以能按時分糧為要</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">服事時間年限工場</td><td>服事的年限與工場大小</td><td class="item-pts" data-max="5"></td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">服事的果效</td><td>服事所結的果子與影響力</td><td class="item-pts" data-max="5"></td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">教會成長比例</td><td>所服事之教會成長的比例</td><td class="item-pts" data-max="5"></td></tr>
+        <tr class="item-row"><td class="item-num">4</td><td class="item-name">講台的供應</td><td>以能按時分糧為要</td><td class="item-pts" data-max="5"></td></tr>
 
         <tr class="cat-row">
           <td colspan="3">三、九種恩賜應用之次數、廣度深度及屬靈實際經歷</td>
           <td class="score-pts">19 分</td>
         </tr>
-        <tr class="item-row"><td class="item-num">1</td><td class="item-name">九大恩賜種類</td><td>九大恩賜應用的種類數</td><td class="item-pts">9</td></tr>
-        <tr class="item-row"><td class="item-num">2</td><td class="item-name">恩賜應用次數</td><td>恩賜在生活中被運用的次數</td><td class="item-pts">5</td></tr>
-        <tr class="item-row"><td class="item-num">3</td><td class="item-name">每次聚會運用</td><td>每次聚會中實際運用恩賜的情形</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">九大恩賜種類</td><td>九大恩賜應用的種類數</td><td class="item-pts" data-max="9"></td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">恩賜應用次數</td><td>恩賜在生活中被運用的次數</td><td class="item-pts" data-max="5"></td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">每次聚會運用</td><td>每次聚會中實際運用恩賜的情形</td><td class="item-pts" data-max="5"></td></tr>
 
         <tr class="cat-row">
           <td colspan="3">四、得啟示之深廣，與　神親密，愛主程度，得聖經各樣真理奧秘</td>
           <td class="score-pts">21 分</td>
         </tr>
-        <tr class="item-row"><td class="item-num">1</td><td class="item-name">得啟示</td><td>從　神所得啟示的深度與廣度</td><td class="item-pts">7</td></tr>
-        <tr class="item-row"><td class="item-num">2</td><td class="item-name">得奧秘</td><td>對聖經奧秘真理的領受</td><td class="item-pts">7</td></tr>
-        <tr class="item-row"><td class="item-num">3</td><td class="item-name">與主親密程度</td><td>與　神同行、相交的深淺</td><td class="item-pts">7</td></tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">得啟示</td><td>從　神所得啟示的深度與廣度</td><td class="item-pts" data-max="7"></td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">得奧秘</td><td>對聖經奧秘真理的領受</td><td class="item-pts" data-max="7"></td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">與主親密程度</td><td>與　神同行、相交的深淺</td><td class="item-pts" data-max="7"></td></tr>
 
         <tr class="cat-row">
           <td colspan="3">五、明白　神旨意，行在　神旨意中；得啟示次數及準度（使徒才可能10-20）</td>
           <td class="score-pts">20 分</td>
         </tr>
-        <tr class="item-row"><td class="item-num">1</td><td class="item-name">明白　神的旨意</td><td>能辨別並明白　神的心意</td><td class="item-pts">5</td></tr>
-        <tr class="item-row"><td class="item-num">2</td><td class="item-name">行在旨意中</td><td>實際行在　神旨意中的程度</td><td class="item-pts">5</td></tr>
-        <tr class="item-row"><td class="item-num">3</td><td class="item-name">說預言</td><td>說預言的準確度與次數</td><td class="item-pts">5</td></tr>
-        <tr class="item-row"><td class="item-num">4</td><td class="item-name">與　神同行</td><td>日常生活中與　神同行的實際</td><td class="item-pts">5</td></tr>
+        <tr class="item-row"><td class="item-num">1</td><td class="item-name">明白　神的旨意</td><td>能辨別並明白　神的心意</td><td class="item-pts" data-max="5"></td></tr>
+        <tr class="item-row"><td class="item-num">2</td><td class="item-name">行在旨意中</td><td>實際行在　神旨意中的程度</td><td class="item-pts" data-max="5"></td></tr>
+        <tr class="item-row"><td class="item-num">3</td><td class="item-name">說預言</td><td>說預言的準確度與次數</td><td class="item-pts" data-max="5"></td></tr>
+        <tr class="item-row"><td class="item-num">4</td><td class="item-name">與　神同行</td><td>日常生活中與　神同行的實際</td><td class="item-pts" data-max="5"></td></tr>
 
         <tr class="total-row">
           <td colspan="3" class="total-label">加　總</td>
-          <td class="total-pts">100</td>
+          <td class="total-pts" id="score-total">0</td>
         </tr>
 
       </tbody>
@@ -604,12 +865,199 @@ footer{
 
 </div><!-- /section-wrap -->
 
+<!-- ── 區塊導覽小圓點 ── -->
+<nav class="section-nav" id="section-nav" aria-label="區塊導覽">
+  <a class="nav-dot" data-target="sec-notebooks" href="#sec-notebooks"><span class="nav-dot-label">筆記本</span></a>
+  <a class="nav-dot" data-target="sec-records" href="#sec-records"><span class="nav-dot-label">紀錄表格</span></a>
+  <a class="nav-dot" data-target="sec-tools" href="#sec-tools"><span class="nav-dot-label">小工具</span></a>
+  <a class="nav-dot" data-target="sec-quotient" href="#sec-quotient"><span class="nav-dot-label">二十商數</span></a>
+  <a class="nav-dot" data-target="sec-score" href="#sec-score"><span class="nav-dot-label">靈程評分</span></a>
+</nav>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-cross">✦</div>
   <p class="footer-verse">「你要全心倚靠耶和華，不可倚靠自己的聰明，<br>在你一切所行的事上都要認定他，他必指引你的路。」</p>
   <p class="footer-ref">箴言 3:5–6 · Proverbs 3:5–6</p>
 </footer>
+
+</div><!-- /page-content -->
+
+<script>
+// ── 二十商數：產生 0~5 下拉選單並加總 ──
+(function(){
+  var body = document.getElementById('quotient-body');
+  var total = document.getElementById('quotient-total');
+  var cells = body.querySelectorAll('.q-score-cell');
+  cells.forEach(function(cell){
+    var sel = document.createElement('select');
+    sel.className = 'score-select';
+    for (var i = 0; i <= 5; i++){
+      var opt = document.createElement('option');
+      opt.value = i; opt.textContent = i;
+      sel.appendChild(opt);
+    }
+    sel.value = 0;
+    sel.addEventListener('change', recalc);
+    cell.appendChild(sel);
+  });
+  function recalc(){
+    var sum = 0;
+    body.querySelectorAll('.score-select').forEach(function(s){ sum += Number(s.value); });
+    total.textContent = sum;
+  }
+})();
+
+// ── 靈程評分：依配分產生下拉選單並加總 ──
+(function(){
+  var body = document.getElementById('score-body');
+  var total = document.getElementById('score-total');
+  var cells = body.querySelectorAll('.item-pts[data-max]');
+  cells.forEach(function(cell){
+    var max = Number(cell.getAttribute('data-max'));
+    var sel = document.createElement('select');
+    sel.className = 'score-select';
+    for (var i = 0; i <= max; i++){
+      var opt = document.createElement('option');
+      opt.value = i; opt.textContent = i;
+      sel.appendChild(opt);
+    }
+    sel.value = 0;
+    sel.addEventListener('change', recalc);
+    cell.appendChild(sel);
+  });
+  function recalc(){
+    var sum = 0;
+    body.querySelectorAll('.score-select').forEach(function(s){ sum += Number(s.value); });
+    total.textContent = sum;
+  }
+})();
+
+// ── 區塊導覽小圓點：捲動高亮 + 點擊跳轉 ──
+(function(){
+  var nav = document.getElementById('section-nav');
+  var dots = Array.prototype.slice.call(nav.querySelectorAll('.nav-dot'));
+  var sections = dots.map(function(d){ return document.getElementById(d.dataset.target); });
+
+  dots.forEach(function(dot){
+    dot.addEventListener('click', function(e){
+      e.preventDefault();
+      var target = document.getElementById(dot.dataset.target);
+      if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  function setActive(){
+    var pos = window.scrollY + window.innerHeight * 0.35;
+    var current = sections[0];
+    sections.forEach(function(sec){
+      if (sec && sec.offsetTop <= pos) current = sec;
+    });
+    dots.forEach(function(dot){
+      dot.classList.toggle('active', current && dot.dataset.target === current.id);
+    });
+  }
+  window.addEventListener('scroll', setActive, {passive:true});
+  window.addEventListener('resize', setActive);
+  setActive();
+})();
+
+// ── 登入門檻：Google 登入 / 訪客問答 ──
+(function(){
+  var GOOGLE_CLIENT_ID = '880084401789-egmfanqbsu5r2ir33gejt00aaa5acdg5.apps.googleusercontent.com';
+  var ALLOWED_EMAIL = 'vup5xu3@gmail.com';
+  var TEACHING_TOKENS = ['預','備','迎','接','基督'];
+  var NOT_MEMBER_URL = 'https://hopeseed-sog-tpe.vercel.app/form.html';
+  var WRONG_ANSWER_URL = 'https://www.sonofgod-church.com/about/memorandum';
+
+  var gate = document.getElementById('auth-gate');
+  var pageContent = document.getElementById('page-content');
+  var stepChoice = document.getElementById('auth-step-choice');
+  var stepMember = document.getElementById('auth-step-member');
+  var stepQuestion = document.getElementById('auth-step-question');
+  var googleError = document.getElementById('google-error');
+  var answerError = document.getElementById('answer-error');
+  var teachingInput = document.getElementById('teaching-answer');
+
+  function showStep(step){
+    [stepChoice, stepMember, stepQuestion].forEach(function(s){ s.hidden = (s !== step); });
+  }
+
+  function unlock(){
+    gate.style.display = 'none';
+    pageContent.style.display = '';
+  }
+
+  function parseJwt(token){
+    try{
+      var base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+      var json = decodeURIComponent(atob(base64).split('').map(function(c){
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(json);
+    }catch(e){ return null; }
+  }
+
+  function handleGoogleCredential(response){
+    var payload = response && response.credential ? parseJwt(response.credential) : null;
+    if (payload && payload.email && payload.email_verified && payload.email.toLowerCase() === ALLOWED_EMAIL){
+      googleError.hidden = true;
+      unlock();
+    } else {
+      googleError.hidden = false;
+    }
+  }
+
+  window.addEventListener('load', function(){
+    if (window.google && google.accounts && google.accounts.id){
+      try{
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleCredential
+        });
+        google.accounts.id.renderButton(
+          document.getElementById('g-signin-btn'),
+          { theme:'outline', size:'large', text:'signin_with', shape:'pill', width:260 }
+        );
+      }catch(e){ /* Client ID 尚未設定時忽略 */ }
+    }
+  });
+
+  document.getElementById('guest-btn').addEventListener('click', function(){
+    showStep(stepMember);
+  });
+
+  document.getElementById('back-to-choice-1').addEventListener('click', function(){
+    showStep(stepChoice);
+  });
+
+  document.getElementById('member-yes-btn').addEventListener('click', function(){
+    showStep(stepQuestion);
+    teachingInput.focus();
+  });
+
+  document.getElementById('member-no-btn').addEventListener('click', function(){
+    window.location.href = NOT_MEMBER_URL;
+  });
+
+  function submitAnswer(){
+    var val = teachingInput.value.trim();
+    var ok = TEACHING_TOKENS.every(function(tok){ return val.indexOf(tok) !== -1; });
+    if (ok){
+      answerError.hidden = true;
+      unlock();
+    } else {
+      answerError.hidden = false;
+      setTimeout(function(){ window.location.href = WRONG_ANSWER_URL; }, 1500);
+    }
+  }
+
+  document.getElementById('submit-answer-btn').addEventListener('click', submitAnswer);
+  teachingInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') submitAnswer();
+  });
+})();
+</script>
 
 </body>
 </html>
